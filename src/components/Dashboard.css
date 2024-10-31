@@ -1,0 +1,115 @@
+.dashboard-container {
+  padding: 20px;
+
+  min-height: 100vh;
+}
+
+h1, h5 {
+  color: rgb(109, 232, 127); /* Color verde oscuro para el título */
+  margin-bottom: 30px;
+}
+
+
+
+.hero-image {
+  background-image: url('https://media.admagazine.com/photos/618a675951ab72df0a76433a/3:2/w_3000,h_2000,c_limit/68307.jpg'); 
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 50px;
+  text-align: center;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+
+.weather-widget {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(135deg, #d1fca5, #a5fcce);
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  flex: 1
+}
+
+.weather-widget h4{
+  color: rgb(36, 142, 53);
+}
+
+.weather-icon {
+  width: 80px;
+  height: 80px;
+}
+
+.weather-info {
+  text-align: center;
+}
+
+.date-time {
+  text-align: center; /* Alinea la fecha/hora a la derecha */
+  color: #333;
+  font-size: 1.2em;
+}
+
+.selectionText{
+  padding: 3vh;
+  font-size: 48px;
+  text-align: center;
+}
+
+
+
+.temp {
+  font-size: 2.5em;
+  margin: 0;
+}
+
+.location {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+.additional-info {
+  font-size: 0.9em;
+  color: #e0e0e0;
+}
+
+.button-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.dashboard-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff; /* Fondo blanco para los botones */
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s; /* Efecto de transición */
+}
+
+.dashboard-btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Efecto de hover */
+}
+
+.dashboard-icon {
+  width: 50px; /* Tamaño de icono */
+  height: 50px; /* Tamaño de icono */
+  margin-bottom: 10px;
+}
+
+.dashboard-btn span {
+  font-size: 1.2em; /* Tamaño de texto en los botones */
+  color: #333; /* Color de texto */
+}

@@ -1,0 +1,105 @@
+.tareas-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.tareas-title {
+    font-size: 2em;
+    color: #4CAF50;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.tareas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(45vh, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.tarea-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #def8cf;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    text-align: center;
+    transition: transform 0.3s ease, background 0.3s ease;
+    animation: fadeIn 1s ease;
+}
+
+.tarea-card:hover {
+    background: linear-gradient(135deg, #a6e6a4, #7ac0c4);
+    transform: scale(1.05) rotate(1deg);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.deleteTaskButton{
+    background-color: rgb(255, 76, 76);
+    width: 15vh;
+    height: 6vh;
+    border-radius: 10px;
+    color: rgb(0, 0, 0);
+    border-color: #ff0000;
+}
+
+.deleteTaskButton:hover{
+    background-color: rgb(226, 70, 70);
+}
+
+.tarea-image {
+    width: 25vh;
+    height: 25vh;
+    border-radius: 8px;
+    margin-bottom: 2vh;
+}
+
+.tarea-info {
+    padding: 10px;
+}
+
+select {
+    padding: 8px;
+    border-radius: 4px;
+    margin-left: 10px;
+    background-color: #e8f6cf;
+}
+
+.tarea-name {
+    font-size: 1.2em;
+    color: #333;
+    margin: 10px 0 5px 0;
+}
+
+.tarea-type {
+    font-size: 1em;
+    color: #555;
+}
+
+.tarea-date {
+    font-size: 0.9em;
+    color: #777;
+}
+
+.filter-select {
+    padding: 5px;
+    font-size: 1em;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}

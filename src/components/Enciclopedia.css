@@ -1,0 +1,149 @@
+body {
+    background-color: #f4f4f4;
+    font-family: 'Arial', sans-serif;
+}
+
+h1 {
+    color: #2c3e50;
+}
+
+.recommendations-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card {
+    background-color: #f8f9fa; /* Color de fondo de la tarjeta */
+    border: 1px solid #dee2e6; /* Color del borde de la tarjeta */
+    border-radius: 0.5rem; /* Bordes redondeados */
+    transition: box-shadow 0.2s; /* Transición suave para el efecto de sombra */
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
+}
+
+.animated-card {
+    opacity: 0;
+    animation: fadeInUp 0.5s forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.btn {
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+.result-section {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.user-text, .response-text {
+    flex: 1;
+    padding: 15px;
+    width: 30vh;
+    border-radius: 8px;
+    margin: 0 10px;
+}
+
+.user-text{
+    align-content: center;
+}
+
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.input-section {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.plantContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.plantName {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px 20px;
+    border: 2px solid #4CAF50;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    color: #333;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.plantName:focus {
+    outline: none;
+    border-color: #2e7d32;
+    box-shadow: 0 6px 12px rgba(0, 128, 0, 0.2);
+}
+
+.plantName::placeholder {
+    color: #888;
+    font-style: italic;
+}
+
+.btn-primary {
+    
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.plantText{
+    position: relative;
+    font-size: 100px;
+    font-family: Helvetica;
+    
+}
+
+.responseInfoPlant{
+    font-size: 20px;
+    text-align: justify;
+    font-family: Arial;
+    font-weight: bold;
+}
+
+
+h4 {
+    margin-top: 0;
+}
+
+p {
+    color: #333;
+    font-size: 1rem;
+}

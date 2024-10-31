@@ -1,0 +1,140 @@
+.perfil-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 2rem;
+    background-color: #f3f6e5;
+    transition: transform 0.3s ease, background 0.3s ease;
+    animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.profile-section {
+    width: 30%;
+    background-color: #dff7d9;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.profile-section:hover{
+    background-color: #cde7c7;
+    transition: 0.4s;
+}
+
+.profile-info {
+    margin-bottom: 1rem;
+}
+
+.profile-image {
+    width: 20vh;
+    height: 20vh;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}
+
+.card2-text{
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #3b6e4f;
+}
+
+.username {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #3b6e4f;
+    margin-bottom: 0.5rem;
+}
+
+
+
+.email {
+    color: #6b6b6b;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.follow-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.delete-button {
+    background-color: #ff6b6b;
+    color: white;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 1rem;
+}
+
+.modify-button {
+    background-color: #bbf87e;
+    color: white;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 1rem;
+}
+
+.social-links {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.social-links i {
+    font-size: 1.2rem;
+    color: #3b6e4f;
+    cursor: pointer;
+}
+
+.calendar-section {
+    width: 65%;
+    height: 60%;
+    background-color:  #dff7d9;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+
+.recent-activities {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.activity-card {
+    background-color: #c7fad5;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+}
+
+.activity-card:hover{
+    background-color: #b5f1c5;
+    transition: 0.4s
+}
+
+.activity-card p {
+    margin: 5px 0;
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+}
