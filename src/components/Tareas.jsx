@@ -81,7 +81,7 @@ const Tareas = () => {
         return tarea === 'Riego' ? 'regar3.gif' : tarea === 'Fertilización' ? 'fertilizar2.gif' : 'planta5.png';
     };
 
-    if (loading) return <p>Cargando tareas...</p>;
+    if (loading) return <img src = "planta8.gif" alt="CargandoGif" className='Cargando'></img>
 
     return (
         <div className="tareas-container">

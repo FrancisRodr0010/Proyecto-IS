@@ -22,17 +22,88 @@ h1, h5 {
   margin-bottom: 30px;
 }
 
-.weather-widget {
+.top-bar{
   display: flex;
+  justify-content: space-around;
+  
+}
+
+.notificacionesWidget {
+  display: flex;
+  justify-items: center;
+  width: 100%;
+  height: 45%;
+  background: linear-gradient(135deg, #e3efa2, #97e091);
+  border-radius: 8px;
+  border-style: solid;
+  border-color: rgb(167, 226, 119);
+  padding: 2vh;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
+.notificacionesWidget:hover{
+  background: linear-gradient(135deg, #d4df97, #8dd187);
+  transition: 0.5s;
+}
+
+.nIcon{
+  width: 15vh;
+  height: 15vh;
+  position: relative;
+  top: 2vh;
+}
+
+.textoNotificaciones{
+  padding:3vh;
+  color: rgb(241, 67, 67);
+  font-size: 40px;
+  font-weight: 100px;
+  width: 75%;
+}
+
+.textoPlantasNecesitadas{
+  text-align: center;
+  padding:1vh
+}
+
+.plantasWidget {
+  position: relative;
+  justify-items: center;
+  top: 1vh;
+  height: 45%;
+  background: linear-gradient(135deg, #7ecf73, #8ee280);
+  border-radius: 8px;
+  border-style: solid;
+  border-color: rgb(80, 202, 76);
+  padding: 2vh;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
+.weather-widget {
+  width: 40%;
   flex-direction: column;
   align-items: center;
   background: linear-gradient(135deg, #d1fca5, #a5fcce);
   color: white;
-  padding: 20px;
+  border-style: solid;
+  border-color: rgb(125, 238, 172);
+  padding: 2vh;
   border-radius: 10px;
   margin-bottom: 30px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  flex: 1
+
+}
+
+
+.leftContainer{
+  width: 58%;
+  align-items: center;
+  padding: 2vh;
+  /*background: linear-gradient(135deg, #d1fca5, #a5fcce);
+  border-radius: 10px;
+  margin-bottom: 30px;*/
 }
 
 .weather-widget h4{
@@ -40,11 +111,17 @@ h1, h5 {
 }
 
 .weather-icon {
-  width: 80px;
-  height: 80px;
+  position: relative;
+  top: 4vh;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 15vh;
+  height: 15vh;
 }
 
 .weather-info {
+  padding-top: 3vh;
   text-align: center;
 }
 
@@ -76,7 +153,78 @@ h1, h5 {
 .additional-info {
   font-size: 0.9em;
   color: #e0e0e0;
+  padding-bottom: 7vh;
 }
+
+
+.secondTopBar{
+  display: flex;
+  justify-content: space-around;
+  
+}
+
+
+
+.uniquePlantContainer{
+  width: 30%;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(135deg, #a5fcef, #a5e0fc);
+  color: white;
+  padding: 2vh;
+  border-style: solid;
+  border-color: rgb(125, 229, 238);
+  border-radius: 10px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.plantGif{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 20vh;
+  width:15vh;
+
+}
+
+.lastPlant{
+  text-align: center;
+  color: rgb(4, 141, 125);
+  font-size: 5vh;
+}
+
+
+.randomTipContainer{
+  width: 68%;
+  align-items: center;
+  padding: 2vh;
+  background: linear-gradient(135deg, #c3fca5, #cffca5);
+  border-radius: 10px;
+  border-style: solid;
+  border-color: rgb(167, 226, 119);
+  margin-bottom: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.randomTipContainer h2{
+  color: rgb(77, 162, 46);
+  text-align: center;
+}
+
+.response-tip{
+  justify-items: center;
+  text-align: justify;
+  width: 95%;
+  
+}
+
+.myTip{
+  color: rgb(105, 90, 17);
+  text-align: justify center;
+  font-size: 25px;
+}
+
 
 .button-grid {
   display: grid;
@@ -113,3 +261,6 @@ h1, h5 {
   font-size: 1.2em; /* Tamaño de texto en los botones */
   color: #333; /* Color de texto */
 }
+
+
+

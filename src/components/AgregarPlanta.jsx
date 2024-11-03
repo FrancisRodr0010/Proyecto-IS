@@ -148,11 +148,13 @@ const AgregarPlanta = () => {
                                         style={styles.input}
                                         required
                                     >
+                                        <option value="">Seleccione una frecuencia</option>
                                         <option value = "1">1</option>
                                         <option value = "2">2</option>
                                         <option value = "3">3</option>
                                         <option value = "5">5</option>
                                         <option value = "7">7</option>
+                                        <option value = "10">10</option>
                                     </select>
                                 </div>
                                 
@@ -166,6 +168,7 @@ const AgregarPlanta = () => {
                                         required
                                     >
 
+                                        <option value="">Seleccione una frecuencia</option>
                                         <option value = "20">20</option>
                                         <option value = "30">30</option>
                                         <option value = "40">40</option>
@@ -176,7 +179,7 @@ const AgregarPlanta = () => {
                             </div>
                             
 
-                            
+                        <p>¿Tiene dudas sobre las frecuencias? Consulte la mini enciclopedia</p>
 
                         <div style={styles.inputContainer}>
                             <label style={styles.label}>Descripción:</label>

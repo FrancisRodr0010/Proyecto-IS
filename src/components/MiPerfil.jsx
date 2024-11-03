@@ -10,6 +10,7 @@ const MiPerfil = () => {
         email: localStorage.getItem('email') || ''
     });
     const [tareas, setTareas] = useState([]);
+    const [proxTareas, setProxTareas] = useState([]);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(true);
 
@@ -49,12 +50,31 @@ const MiPerfil = () => {
             }
         };
 
+
+        const fetchProxTasks = async () => {
+            try {
+                const response = await axios.get("http://localhost/API/getProxTasks.php", { withCredentials: true });
+                if (response.data && response.data.data) {
+                    console.log(response.data.data);
+                    setProxTareas(response.data.data.slice(0, 2)); // Obtiene solo las primeras dos tareas
+                } else {
+                    setError('No se encontraron tareas');
+                }
+            } catch (err) {
+                console.error('Error al cargar las tareas:', err);
+                setError('Error al cargar las tareas');
+            } finally {
+                setLoading(false);
+            }
+        };
+
         fetchTasks();
+        fetchProxTasks();
     }, [navigate]);
 
     return (
+        <> 
         <div className="perfil-container">
-            {/* Sección de Perfil */}
             <div className="profile-section">
                 <div className="profile-info">
                     <img src="perfil2.png" alt="Profile" className="profile-image" />
@@ -73,7 +93,7 @@ const MiPerfil = () => {
             <div className="calendar-section">
                 <h5 className="card2-text">Actividad reciente</h5>
                 {loading ? (
-                    <p>Cargando actividades...</p>
+                    <img src = "planta8.gif" alt="CargandoGif" className='Cargando'></img> 
                 ) : error ? (
                     <p className="error-message">{error}</p>
                 ) : (
@@ -81,7 +101,7 @@ const MiPerfil = () => {
                         {tareas.map((tarea, index) => (
                             <div key={index} className="activity-card">
                                 <p><strong>Tarea:</strong> {tarea.tarea}</p>
-                                <p><strong>Fecha:</strong> {tarea.fecha_registro}</p>
+                                <p><strong>Fecha realizada:</strong> {tarea.fecha_registro}</p>
                                 <p><strong>Planta:</strong> {tarea.nombre_comun}</p>
                             </div>
                         ))}
@@ -89,6 +109,35 @@ const MiPerfil = () => {
                 )}
             </div>
         </div>
+        
+
+        <div className="comingActivitiesContainer">
+            <div className = "fill-Container">
+
+            </div>
+
+            <div className = "proxActivitiesSection">
+                <h5 className="card3-text">Pendiente a realizar</h5>
+                {loading ? (
+                    <img src = "planta8.gif" alt="CargandoGif" className='Cargando'></img> 
+                ) : error ? (
+                    <p className="error-message">{error}</p>
+                ) : (
+                    <div className="recent-activities">
+                        {proxTareas.map((tarea, index) => (
+                            <div key={index} className="proxactivity-card">
+                                <p><strong>Tarea:</strong> {tarea.tarea}</p>
+                                <p><strong>Dia a realizar:</strong> {tarea.fecha_programada}</p>
+                                <p><strong>Hacia la planta:</strong> {tarea.nombre_comun}</p>
+                            </div>
+                        ))}
+                    </div>
+                )}
+
+            </div>
+        </div>
+        
+        </>
     );
 };
 

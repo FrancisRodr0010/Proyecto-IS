@@ -243,7 +243,7 @@ const Enciclopedia = () => {
 export default Enciclopedia;*/
 
 
-import React, { useState, useCallback  } from 'react';
+import React, { useState, useCallback, useEffect  } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Enciclopedia.css';
 import axios from 'axios';
@@ -253,11 +253,40 @@ const Enciclopedia = () => {
     const navigate = useNavigate();
     const handlereturn = () => { navigate('/Dashboard'); }
     const [plantName, setPlantName] = useState('');
-    const [responseText, setResponseText] = useState('');
+    const [responseText, setResponseText] = useState('Tu respuesta se mostrará aqui');
     const [submittedText, setSubmittedText] = useState('');
+    const [loading, setLoading] = useState(false);
+
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    
+        const verificarSesion = async () => {
+          try {
+            const response = await axios.get('http://localhost/API/verificar_sesion.php', { withCredentials: true });
+            if (!response.data.sesion_activa) {
+              navigate('/'); // Redirige a la raíz si no hay sesión activa
+            }
+          } catch (error) {
+            console.error('Error al verificar la sesión:', error);
+            navigate('/');
+          }
+        };
+        verificarSesion();
+
+    }, [navigate]);
+
 
     const handleInputChange = (e) => {
         setPlantName(e.target.value);
+    };
+
+    const validarCarga = (loading) => {
+        if (loading){
+            return <><img src = "planta8.gif" alt="CargandoGif" className='Cargando'></img> <p>Cargando...</p></>
+        } else {
+            return <p className = "responseInfoPlant">{responseText}</p>
+        }
     };
 
     const searchPlant = useCallback(async () => {
@@ -268,7 +297,7 @@ const Enciclopedia = () => {
 
         setSubmittedText(plantName); // Almacena el texto ingresado
         setPlantName('');
-
+        setLoading(true);
         try {
             const response = await axios.post(
                 "https://api.openai.com/v1/chat/completions",
@@ -276,7 +305,7 @@ const Enciclopedia = () => {
                     model: "gpt-3.5-turbo",
                     messages: [
                         { role: "system", content: "Eres un experto en cuidado de plantas." },
-                        { role: "user", content: `Busca información y datos cientificos sobre la planta: ${plantName}. Si consideras que no es una planta o flor, o que carece de sentido el texto, colocar 'lo ingresado no es una planta'. Por favor, limita tu respuesta a 200 tokens y asegúrate de que la información sea coherente.` }
+                        { role: "user", content: `Busca información como frecuencia de riego, fertilizacion y asoleo sobre la planta: ${plantName}, incluyendo datos importantes extras. Si consideras que no es una planta o flor, o que carece de sentido el texto, colocar 'lo ingresado no es una planta'. Por favor, limita tu respuesta a 250 tokens y asegúrate de que la información sea coherente.` }
                     ],
                     max_tokens: 250
                 },
@@ -288,6 +317,7 @@ const Enciclopedia = () => {
                 }
             );
             setResponseText(response.data.choices[0].message.content);
+            setLoading(false);
         } catch (error) {
             console.error("Error al obtener la información de la planta:", error);
             setResponseText("No se pudo obtener la recomendación.");
@@ -415,19 +445,25 @@ const Enciclopedia = () => {
                         <p className = "plantText">{submittedText || ""}</p>
                     </div>
                     <div className="response-text">
-                        <p className = "responseInfoPlant">{responseText || ""}</p>
+                        {validarCarga(loading)}
                     </div>
                 </div>
             </div>
 
             <br />
             <br />
+            <br />
+            <br />
+
+
+            <h1 className="display-4">Plantas más comunes</h1>
+            <br />
             
 
             <div className="row">
                 {plantas.map((planta, index) => (
-                    <div className='col-md-6 mb-4' key={index}>
-                        <div className='card mb-4 animated-card'>
+                    <div className='col-md-4 mb-2' key={index}>
+                        <div className='card mb-2 animated-card' style = {{backgroundColor: '#e8fef2'}}>
                             <div className='card-body'>
                                 <h5 className='card-title'>{planta.nombre}</h5>
                                 <p className='card-text'>{planta.descripcion}</p>

@@ -49,7 +49,8 @@ if($tarea == 'Riego'){
                     VALUES (?, ?, ?, ?)";
         $stmtInsert = $conn->prepare($sqlInsert);
 
-
+        
+        
         $stmtInsert->bind_param("sssi", $tarea, $fechaRegistroStr, $fechaProgramada, $planta_id);
 
         if ($stmtInsert->execute()) {
@@ -58,6 +59,19 @@ if($tarea == 'Riego'){
             echo json_encode(['success' => false, 'message' => 'Error al programar la tarea']);
         }
         $stmtInsert->close();
+
+        $estado = 'Estable';
+        $updatePlantSql = "UPDATE plantas SET estado = ? WHERE id = ?";
+        $stmtUpdate = $conn->prepare($updatePlantSql);
+        $stmtUpdate->bind_param("si", $estado, $planta_id);
+
+        if ($stmtUpdate->execute()) {
+            echo json_encode(['success' => true, 'message' => 'Estado de la planta actualizado exitosamente']);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Error al actualizar el estado de la planta']);
+        }
+        $stmtUpdate->close();
+
     } else {
         echo json_encode(['success' => false, 'message' => 'No se encontró la frecuencia de riego para la planta']);
     }

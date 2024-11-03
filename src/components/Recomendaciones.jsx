@@ -92,7 +92,7 @@ const Recomendaciones = () => {
                         <div style={styles.textContainer}>
                             <h3 style={styles.plantName}>{name}</h3>
                             <p style={styles.recommendation}>
-                                {recommendations[name] || "Estamos buscando informacion breve sobre tu planta..."}
+                                {recommendations[name] || <><img src="planta8.gif" alt="CargandoGif" style={styles.loadingGif} /> <p>Cargando...</p> </>}
                             </p>
                         </div>
                     </div>
@@ -103,6 +103,12 @@ const Recomendaciones = () => {
 };
 
 const styles = {
+
+    loadingGif: {
+        width: '50px',
+        height: '50px',
+    },
+
     container: {
         display: 'flex',
         flexDirection: 'column',

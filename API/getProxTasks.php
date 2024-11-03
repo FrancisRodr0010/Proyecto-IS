@@ -1,51 +1,50 @@
 <?php
-session_start(); // Iniciar la sesión
-header("Access-Control-Allow-Origin: http://localhost:3000"); // Cambia el origen según sea necesario
+session_start();
+header("Access-Control-Allow-Origin: http://localhost:3000");
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Access-Control-Allow-Credentials: true"); // Permitir el uso de credenciales
 header("Content-Type: application/json; charset=UTF-8");
 
-// Conectar a la base de datos
+
 $servername = "dbis.cpmigq8o8do7.us-east-2.rds.amazonaws.com"; // Cambia esto por el endpoint de tu base de datos RDS
-$username = "admin"; // Cambia esto por tu usuario de RDS
-$password = "root_0010"; // Cambia esto por tu contraseña de RDS
-$dbname = "dbis"; // Cambia esto por el nombre de tu base de datos en RDS
+$username = "admin"; // usuario de RDS
+$password = "root_0010"; //contraseña de RDS
+$dbname = "dbis"; // RDS DB
+
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Verificar la conexión
-if ($conn->connect_error) {
-    die(json_encode(array("success" => false, "message" => "Conexión fallida")));
-}
 
-// Verificar si el usuario está logueado
 if (!isset($_SESSION['user_id'])) {
     echo json_encode(array("success" => false, "message" => "Usuario no autenticado"));
     exit; // Terminar el script si el usuario no está autenticado
 }
 
-// Obtener el ID del usuario logueado
 $usuario_id = $_SESSION['user_id'];
 
-// Preparar la consulta para obtener las plantas del usuario logueado
-$sql = "SELECT id, nombre_comun, nombre_cientifico, descripcion, estado, frecuencia_riego, frecuencia_fertilizacion FROM plantas WHERE usuario_id = ? ORDER BY fecha_creacion DESC";
+
+
+$sql = "SELECT t.id_t, t.tarea, t.fecha_programada, p.nombre_comun FROM Tareas t JOIN plantas p ON t.id_planta = p.id WHERE p.usuario_id = ? ORDER BY fecha_programada ASC";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $usuario_id);
 $stmt->execute();
 $result = $stmt->get_result();
 
-$plantas = array();
+$tareas = array();
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        $plantas[] = $row;
+        $tareas[] = $row;
     }
-    echo json_encode(array("success" => true, "data" => $plantas));
+    echo json_encode(array("success" => true, "data" => $tareas));
 } else {
     echo json_encode(array("success" => true, "data" => [])); // También devolver una lista vacía
 }
 
 $stmt->close();
 $conn->close();
+
+
+
 ?>

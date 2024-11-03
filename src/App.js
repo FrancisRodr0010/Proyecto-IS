@@ -14,6 +14,7 @@ import ModifyProfile from './components/ModifyProfile';
 import Recomendaciones from './components/Recomendaciones';
 import Tareas from './components/Tareas';
 import DeleteProfile from './components/DeleteProfile';
+import Notificaciones from './components/Notificaciones';
 
 
 
@@ -45,6 +46,7 @@ const App = () => {
                                     <Route path="modificar" element={<TablaPlantas />} />
                                     <Route path="modify" element={<ModifyProfile />} />
                                     <Route path="recomendaciones" element={<Recomendaciones />} />
+                                    <Route path="mis-notificaciones" element={<Notificaciones />} />
                                 </Routes>
                               </div>
                               

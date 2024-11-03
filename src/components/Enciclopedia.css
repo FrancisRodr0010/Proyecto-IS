@@ -14,7 +14,7 @@ h1 {
 }
 
 .card {
-    background-color: #f8f9fa; /* Color de fondo de la tarjeta */
+    background-color: #c7f6d9; /* Color de fondo de la tarjeta */
     border: 1px solid #dee2e6; /* Color del borde de la tarjeta */
     border-radius: 0.5rem; /* Bordes redondeados */
     transition: box-shadow 0.2s; /* Transición suave para el efecto de sombra */
@@ -66,11 +66,35 @@ h1 {
     margin: 0 10px;
 }
 
-.user-text{
-    align-content: center;
+.response-text{
+    background-color: #def8cf;
+    border-radius: 12px;
+    border-style: solid;
+    border-color: rgb(196, 246, 155);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    text-align: center;
 }
 
 
+
+.user-text{
+    align-content: center;
+    background-color: #edf8cf;
+    border-style: solid;
+    border-color: rgb(230, 241, 131);
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+}
+
+.display-4{
+    color: rgb(1, 104, 22);
+}
+
+.lead{
+    color:rgb(74, 169, 53)
+}
 
 .container {
     display: flex;
@@ -81,6 +105,7 @@ h1 {
 
 .input-section {
     margin-bottom: 20px;
+    width: 95%;
     text-align: center;
 }
 
@@ -93,7 +118,6 @@ h1 {
 
 .plantName {
     width: 100%;
-    max-width: 400px;
     padding: 12px 20px;
     border: 2px solid #4CAF50;
     border-radius: 8px;
@@ -126,8 +150,9 @@ h1 {
 
 .plantText{
     position: relative;
-    font-size: 100px;
+    font-size: 75px;
     font-family: Helvetica;
+    color:rgb(105, 130, 15)
     
 }
 
@@ -136,6 +161,7 @@ h1 {
     text-align: justify;
     font-family: Arial;
     font-weight: bold;
+    color:rgb(31, 118, 5)
 }
 
 

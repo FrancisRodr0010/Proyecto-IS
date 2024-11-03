@@ -12,6 +12,7 @@ const TablaPlantas = () => {
     const [description, setDescription] = useState('');
     const [freqRiego, setFreqRiego] = useState('');
     const [freqFert, setFreqFert] = useState('');
+    const [estadoPlanta, setEstadoPlanta] = useState('');
     const [searchTerm, setSearchTerm] = useState(''); // Estado para el filtro
     const navigate = useNavigate('');
 
@@ -89,6 +90,7 @@ const TablaPlantas = () => {
             setPlantaInfo(null);
             setMostrarFormularioManual(false);
             setPlantaManual({ nombre_comun: '', nombre_cientifico: '', descripcion: '', frecuencia_riego: '', frecuencia_fertilizacion: '' });*/
+            fetchPlantas();
         } catch (error) {
             console.error('Error al registrar la tarea de riego:', error);
             alert('Error al registrar la tarea de riego');
@@ -151,7 +153,7 @@ const TablaPlantas = () => {
         fetchPlantas();
     }, []);
 
-    if (loading) return <p>Cargando plantas...</p>;
+    if (loading) return <img src = "planta8.gif" alt="CargandoGif" className='Cargando'></img>;
     if (error) return <p>{error}</p>;
 
     // Filtrar plantas según el término de búsqueda
@@ -177,6 +179,7 @@ const TablaPlantas = () => {
                                 <div className="card-body">
                                     <h5 className="card-title">{planta.nombre_comun}</h5>
                                     <p className="card-text">{planta.descripcion}</p>
+                                    <p className = "card-text">Estado: {planta.estado}</p>
                                     <button
                                         className="btn btn-warning me-2"
                                         onClick={() => {

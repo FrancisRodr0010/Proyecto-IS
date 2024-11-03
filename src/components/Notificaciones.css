@@ -1,0 +1,72 @@
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
+.notificaciones-grid{
+    display: grid;
+    gap: 2px;
+    width: 100%;
+    padding-left: 5vh;
+    padding-right: 5vh;
+}
+
+.notificacion-card {
+    display: flex;
+    height: 90%;
+    flex-direction: column;
+    background-color: #def8cf;
+    border-style: solid;
+    border-color: rgb(167, 226, 119);
+    border-radius: 12px;
+    padding-left: 2vh;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, background 0.3s ease;
+    animation: fadeIn 1s ease;
+}
+
+.notificacion-desc{
+    color: #f38673;
+    font-size: 25px;
+}
+
+.notificacion-planta{
+    color: #6cc482;
+    font-size: 20px;
+}
+
+.notificacion-date{
+    position: relative;
+    bottom: 1vh;
+    color: black;
+    font-weight: 500;
+}
+
+
+
+.eliminar-btn {
+    position: absolute;
+    background-color: #f38673;
+    margin-top: 5vh; 
+    right: 10vh;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 5vh;
+    height: 5vh;
+    font-size: 18px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.eliminar-btn:hover {
+    background-color: #ff4d4d; /* Cambia de color al pasar el cursor */
+    transform: scale(1.1); /* Agranda un poco el botón */
+}
+
+
+

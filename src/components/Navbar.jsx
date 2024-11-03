@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Navbar = () => {
+    const [cantNotificaciones, setCantNotificaciones] = useState([]);
     const navigate = useNavigate();
     const username = localStorage.getItem('username'); // Obtener el nombre de usuario
 
@@ -17,12 +18,33 @@ const Navbar = () => {
         }
     };
 
+    const fetchNumeroNotificaciones = async () => {
+        try {
+            const response = await axios.get("http://localhost/API/getCantNotifications.php", { withCredentials: true });
+            if (response.data && response.data.data) {
+                setCantNotificaciones(response.data.data.slice(0, 1));
+            }
+        } catch (error) {
+            console.log("Ocurrio un error", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchNumeroNotificaciones();
+        const intervalId = setInterval(fetchNumeroNotificaciones, 1000);
+        return () => clearInterval(intervalId);
+      }, []);
+
     const handleWelcomeClick = () => {
-        navigate('/modify'); 
+        navigate('/perfil');
     };
 
     const handleHomeClick = () => {
-        navigate('/Dashboard'); 
+        navigate('/Dashboard');
+    };
+
+    const handleNotifications = () => {
+        navigate('/mis-notificaciones');
     };
 
     const styles = {
@@ -68,7 +90,7 @@ const Navbar = () => {
             padding: 0,
         },
         homeIcon: {
-            width: '5vh',  
+            width: '5vh',
             height: '5vh',
         },
     };
@@ -78,7 +100,17 @@ const Navbar = () => {
             <button onClick={handleHomeClick} style={styles.homeButton}>
                 <img src="home.png" alt="Home" style={styles.homeIcon} />
             </button>
+
             <button onClick={handleLogout} style={styles.logoutButton}>Cerrar Sesión</button>
+
+            <button onClick={handleNotifications} type="button" className="btn btn-success position-relative">
+                Notificaciones
+                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {cantNotificaciones[0]?.Cant_Notificaciones || 0}
+                    <span className="visually-hidden">unread messages</span>
+                </span>
+            </button>
+
             <button onClick={handleWelcomeClick} style={styles.button}>
                 Bienvenido, {username}
             </button>

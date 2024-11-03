@@ -2,9 +2,34 @@
     display: flex;
     justify-content: space-around;
     padding: 2rem;
-    background-color: #f3f6e5;
+    background-color: #f4f8e1;
     transition: transform 0.3s ease, background 0.3s ease;
     animation: fadeIn 1s ease;
+}
+
+.comingActivitiesContainer{
+    display: flex;
+    justify-content: space-around;
+    padding: 2rem;
+    background-color: #f4f8e1;
+    transition: transform 0.3s ease, background 0.3s ease;
+    animation: fadeIn 1s ease;
+}
+
+.Cargando{
+    width: 10vh;
+    height: 10vh;
+}
+
+.fill-Container{
+    width: 25%;
+    height: 50%;
+    background-color: #dff7d9;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    
 }
 
 @keyframes fadeIn {
@@ -16,17 +41,41 @@
     }
 }
 
+
+.proxActivitiesSection{
+    position: relative;
+    bottom: 12vh;
+    width: 65%;
+    background-color: #f6fcd7;
+    border-style: solid;
+    border-color: rgb(240, 248, 191);
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+    
+
+    /* width: 65%;
+    height: 60%;
+    background-color:  #dff7d9;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);*/
+}
+
 .profile-section {
-    width: 30%;
+    width: 25%;
     background-color: #dff7d9;
     padding: 1.5rem;
+    border-style: solid;
+    border-color: rgb(198, 236, 188);
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
 
 .profile-section:hover{
-    background-color: #cde7c7;
+    background-color: #d0e8cb;
     transition: 0.4s;
 }
 
@@ -35,8 +84,8 @@
 }
 
 .profile-image {
-    width: 20vh;
-    height: 20vh;
+    width: 18vh;
+    height: 18vh;
     border-radius: 50%;
     margin-bottom: 1rem;
 }
@@ -45,6 +94,12 @@
     font-size: 1.5rem;
     font-weight: bold;
     color: #3b6e4f;
+}
+
+.card3-text{
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #6e6d3b;
 }
 
 .username {
@@ -90,21 +145,13 @@
     margin-bottom: 1rem;
 }
 
-.social-links {
-    display: flex;
-    gap: 0.5rem;
-}
-
-.social-links i {
-    font-size: 1.2rem;
-    color: #3b6e4f;
-    cursor: pointer;
-}
 
 .calendar-section {
     width: 65%;
     height: 60%;
     background-color:  #dff7d9;
+    border-style: solid;
+    border-color: rgb(198, 248, 197);
     padding: 1.5rem;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -120,18 +167,36 @@
 .activity-card {
     background-color: #c7fad5;
     border-radius: 8px;
-    padding: 10px;
+    padding: 1vh;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     margin-bottom: 10px;
 }
+
 
 .activity-card:hover{
     background-color: #b5f1c5;
     transition: 0.4s
 }
 
+.proxactivity-card {
+    background-color: #f4fac7;
+    border-radius: 8px;
+    padding: 1vh;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+}
+
+.proxactivity-card:hover{
+    background-color: #e3e9b8;
+    transition: 0.4s;
+}
+
+.proxactivity-card p {
+    margin: 0.5vh 0;
+}
+
 .activity-card p {
-    margin: 5px 0;
+    margin: 0.5vh 0;
 }
 
 .error-message {

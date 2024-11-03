@@ -24,6 +24,7 @@ $data = json_decode(file_get_contents("php://input"), true);
 $nombre_comun = $data['nombre_comun'];
 $nombre_cientifico = $data['nombre_cientifico'];
 $descripcion = $data['descripcion'];
+$estado = 'Aun no se ha realizado tareas sobre esta planta';
 $frecuencia_riego = (int)$data['frecuencia_riego'];
 $frecuencia_fertilizacion = (int)$data['frecuencia_fertilizacion'];
 $usuario_id = $_SESSION['user_id']; // Debe coincidir con el nombre de la variable de sesión
@@ -31,10 +32,10 @@ $usuario_id = $_SESSION['user_id']; // Debe coincidir con el nombre de la variab
 
 
 
-$sql = "INSERT INTO plantas (nombre_comun, nombre_cientifico, descripcion, fecha_creacion, frecuencia_riego, frecuencia_fertilizacion, usuario_id)
-        VALUES (?, ?, ?, CURDATE(), ?, ?, ?)";
+$sql = "INSERT INTO plantas (nombre_comun, nombre_cientifico, descripcion, estado,  fecha_creacion, frecuencia_riego, frecuencia_fertilizacion, usuario_id)
+        VALUES (?, ?, ?, ?, CURDATE(), ?, ?, ?)";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("sssiii", $nombre_comun, $nombre_cientifico, $descripcion, $frecuencia_riego, $frecuencia_fertilizacion, $usuario_id);
+$stmt->bind_param("ssssiii", $nombre_comun, $nombre_cientifico, $descripcion, $estado, $frecuencia_riego, $frecuencia_fertilizacion, $usuario_id);
 
 if ($stmt->execute()) {
     echo json_encode(['success' => true, 'message' => 'Planta agregada exitosamente']);
