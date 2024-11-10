@@ -3,7 +3,6 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-
 const fetchPlantas = async () => {
     const response = await axios.get('http://localhost:5000/api/plants');
     console.log(response.data.data);
@@ -15,7 +14,6 @@ const AgregarPlanta = () => {
     const [plantaInfo, setPlantaInfo] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [mostrarFormularioManual, setMostrarFormularioManual] = useState(false);
-    const [showModal, setShowModal] = useState(false);
     const [plantaManual, setPlantaManual] = useState({
         nombre_comun: '',
         nombre_cientifico: '',
@@ -31,6 +29,7 @@ const AgregarPlanta = () => {
 
     const navigate = useNavigate();
     useEffect(() => {
+        window.scrollTo(0, 0);
         const verificarSesion = async () => {
             try {
                 const response = await axios.get('http://localhost/API/verificar_sesion.php', { withCredentials: true });
@@ -55,6 +54,13 @@ const AgregarPlanta = () => {
         setPlantaInfo(plantaSeleccionada);
     };
 
+    const manejarCambioRiegoAPI = (event) => {
+        setPlantaInfo({ ...plantaInfo, frecuencia_riego: event.target.value });
+    };
+
+    const manejarCambioFertilizacionAPI = (event) => {
+        setPlantaInfo({ ...plantaInfo, frecuencia_fertilizacion: event.target.value });
+    };
 
     const manejarEnvio = async (event) => {
         event.preventDefault();
@@ -63,8 +69,8 @@ const AgregarPlanta = () => {
             nombre_comun: plantaInfo.common_name,
             nombre_cientifico: plantaInfo.scientific_name,
             descripcion: plantaInfo.description,
-            frecuencia_riego: plantaInfo.freqRiego,
-            frecuencia_fertilizacion: plantaInfo.freqFerti
+            frecuencia_riego: plantaInfo.frecuencia_riego,
+            frecuencia_fertilizacion: plantaInfo.frecuencia_fertilizacion
         };
 
         if (!plantaData.nombre_comun || !plantaData.nombre_cientifico || isSubmitting) return;
@@ -74,13 +80,13 @@ const AgregarPlanta = () => {
         try {
             await axios.post('http://localhost/API/agregarPlanta.php', plantaData, { withCredentials: true });
             alert('Planta agregada correctamente');
-            setShowModal(true);
+            //setShowModal(true);
             setPlantaSeleccionada('');
             setPlantaInfo(null);
             setMostrarFormularioManual(false);
             setPlantaManual({ nombre_comun: '', nombre_cientifico: '', descripcion: '', frecuencia_riego: '', frecuencia_fertilizacion: '' });
 
-            navigate('/modificar'); // Navega después de un pequeño retraso
+            navigate('/modificar');
             
         } catch (error) {
             console.error('Error al guardar la planta:', error);
@@ -100,7 +106,6 @@ const AgregarPlanta = () => {
 
     return (
         <div style={styles.container}>
-
             <div style={styles.imageContainer}>
                 <img src="planta7.gif" alt="Gestión de Plantas" style={styles.image} />
             </div>
@@ -113,7 +118,7 @@ const AgregarPlanta = () => {
 
                 {mostrarFormularioManual ? (
                     <form onSubmit={manejarEnvio} style={styles.form}>
-                        <div style = {styles.manualContainer}>
+                        <div style={styles.manualContainer}>
                             <div style={styles.inputContainer}>
                                 <label style={styles.label}>Nombre Común:</label>
                                 <input
@@ -138,49 +143,45 @@ const AgregarPlanta = () => {
                             </div>
                         </div>
 
-                        <div style = {styles.manualContainer}>
+                        <div style={styles.manualContainer}>
                             <div style={styles.inputContainer}>
-                                    <label style={styles.label}>Frecuencia de riego (días)</label>
-                                    <select
-                                        name="frecuencia_riego"
-                                        value={plantaManual.frecuencia_riego}
-                                        onChange={manejarCambioFormularioManual}
-                                        style={styles.input}
-                                        required
-                                    >
-                                        <option value="">Seleccione una frecuencia</option>
-                                        <option value = "1">1</option>
-                                        <option value = "2">2</option>
-                                        <option value = "3">3</option>
-                                        <option value = "5">5</option>
-                                        <option value = "7">7</option>
-                                        <option value = "10">10</option>
-                                    </select>
-                                </div>
-                                
-                                <div style={styles.inputContainer}>
-                                    <label style={styles.label}>Frecuencia de fertilizacion (días)</label>
-                                    <select
-                                        name="frecuencia_fertilizacion"
-                                        value={plantaManual.frecuencia_fertilizacion}
-                                        onChange={manejarCambioFormularioManual}
-                                        style={styles.input}
-                                        required
-                                    >
-
-                                        <option value="">Seleccione una frecuencia</option>
-                                        <option value = "20">20</option>
-                                        <option value = "30">30</option>
-                                        <option value = "40">40</option>
-                                        <option value = "60">60</option>
-                                        <option value = "80">80</option>
-                                    </select>
-                                </div>
+                                <label style={styles.label}>Frecuencia de riego (días)</label>
+                                <select
+                                    name="frecuencia_riego"
+                                    value={plantaManual.frecuencia_riego}
+                                    onChange={manejarCambioFormularioManual}
+                                    style={styles.input}
+                                    required
+                                >
+                                    <option value="">Seleccione una frecuencia</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="5">5</option>
+                                    <option value="7">7</option>
+                                    <option value="10">10</option>
+                                </select>
                             </div>
                             
-
-                        <p>¿Tiene dudas sobre las frecuencias? Consulte la mini enciclopedia</p>
-
+                            <div style={styles.inputContainer}>
+                                <label style={styles.label}>Frecuencia de fertilizacion (días)</label>
+                                <select
+                                    name="frecuencia_fertilizacion"
+                                    value={plantaManual.frecuencia_fertilizacion}
+                                    onChange={manejarCambioFormularioManual}
+                                    style={styles.input}
+                                    required
+                                >
+                                    <option value="">Seleccione una frecuencia</option>
+                                    <option value="20">20</option>
+                                    <option value="30">30</option>
+                                    <option value="40">40</option>
+                                    <option value="60">60</option>
+                                    <option value="80">80</option>
+                                </select>
+                            </div>
+                        </div>
+                        
                         <div style={styles.inputContainer}>
                             <label style={styles.label}>Descripción:</label>
                             <textarea
@@ -191,33 +192,10 @@ const AgregarPlanta = () => {
                                 required
                             />
                         </div>
-                        
-                        
-                        <button type="submit" style={styles.submitButton} disabled={isSubmitting} data-bs-toggle="modal" data-bs-target="#staticBackdrop"> 
+
+                        <button type="submit" style={styles.submitButton} disabled={isSubmitting}>
                             {isSubmitting ? 'Guardando...' : 'Agregar Planta'}
                         </button>
-
-
-                        {showModal && (
-                            <div className="modal fade show d-block" id="exampleModal" tabIndex="-1" role="dialog">
-                                <div className="modal-dialog" role="document">
-                                    <div className="modal-content">
-                                        <div className="modal-header">
-                                            <h5 className="modal-title" id="exampleModalLabel">Planta</h5>
-                                            <button type="button" className="btn-close" aria-label="Close" onClick={() => setShowModal(false)}></button>
-                                        </div>
-                                        <div className="modal-body">
-                                            <p>Se ingresó la planta</p>
-                                        </div>
-                                        <div className="modal-footer">
-                                            <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>Cerrar</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-
-
 
                     </form>
                 ) : (
@@ -229,7 +207,7 @@ const AgregarPlanta = () => {
                                 onChange={manejarCambio}
                                 style={styles.select}
                             >
-                                <option value="">Seleccione una planta</option>
+                                <option value="">Seleccione una de las 20 plantas disponibles</option>
                                 {plantas.map((planta) => (
                                     <option key={planta.id} value={planta.id}>
                                         {planta.common_name || planta.scientific_name}
@@ -239,10 +217,44 @@ const AgregarPlanta = () => {
                         </div>
 
                         {plantaInfo && (
-                            <div style={styles.plantInfo}>
-                                <h3>Información de la Planta:</h3>
+                            <div style={styles.infoContainer}>
                                 <p><strong>Nombre Común:</strong> {plantaInfo.common_name}</p>
                                 <p><strong>Nombre Científico:</strong> {plantaInfo.scientific_name}</p>
+
+                                <div style={styles.manualContainer}>
+                                    <div style={styles.inputContainer}>
+                                        <label style={styles.label}>Frecuencia de riego (días)</label>
+                                        <select
+                                            value={plantaInfo.frecuencia_riego}
+                                            onChange={manejarCambioRiegoAPI}
+                                            style={styles.select}
+                                        >
+                                            <option value="">Seleccione una frecuencia</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="5">5</option>
+                                            <option value="7">7</option>
+                                            <option value="10">10</option>
+                                        </select>
+                                    </div>
+
+                                    <div style={styles.inputContainer}>
+                                        <label style={styles.label}>Frecuencia de fertilizacion (días)</label>
+                                        <select
+                                            value={plantaInfo.frecuencia_fertilizacion}
+                                            onChange={manejarCambioFertilizacionAPI}
+                                            style={styles.select}
+                                        >
+                                            <option value="">Seleccione una frecuencia</option>
+                                            <option value="20">20</option>
+                                            <option value="30">30</option>
+                                            <option value="40">40</option>
+                                            <option value="60">60</option>
+                                            <option value="80">80</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         )}
 
@@ -251,17 +263,17 @@ const AgregarPlanta = () => {
                         </button>
                     </form>
                 )}
+
                 <button onClick={handlereturn} style={{ ...styles.submitButton, backgroundColor: 'red' }}>
                     Cancelar
                 </button>
             </div>
-
         </div>
     );
 };
 
 const styles = {
-    // Estilos similares a LoginForm
+    
     container: {
         display: 'flex',
         alignItems: 'center',

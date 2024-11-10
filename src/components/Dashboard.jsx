@@ -15,6 +15,7 @@ const Dashboard = () => {
   const [responseText, setResponseText] = useState('');
   const [plantas, setPlantas] = useState([]);
   const [cantNotificaciones, setCantNotificaciones] = useState([]);
+  const [cantPlantasNecesitadas, setCantPlantasNecesitadas] = useState(0)
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -102,7 +103,6 @@ const Dashboard = () => {
       try {
           const response = await axios.get('http://localhost/API/obtenerPlantas.php', { withCredentials: true });
           if (response.data && response.data.data) {
-              console.log(response.data.data)
               setPlantas(response.data.data.slice(0, 1));
           } else {
               setError('No se encontraron plantas');
@@ -131,9 +131,28 @@ const Dashboard = () => {
       }
   };
 
-  fetchNumeroNotificaciones();
+  fetchNumeroNotificaciones();  
 
   }, [])
+
+
+  useEffect(() =>{
+    const fetchPlantasNecesitadasCount = async () => {
+      try {
+        const response = await axios.get("http://localhost/API/pendingPlantsCount.php", { withCredentials: true});
+        if (response.data && response.data.success) {
+          setCantPlantasNecesitadas(response.data.data);
+        }
+
+        } catch (error) {
+          console.log("Ocurrio un error", error);
+        }
+      };
+    
+    fetchPlantasNecesitadasCount();
+  }, [])
+  
+
 
   const updateDateTime = () => {
     const now = new Date();
@@ -202,11 +221,12 @@ const Dashboard = () => {
             <div className="leftContainer">
               <button className="notificacionesWidget" onClick={goToNotifications}>
                 <h2 className="textoNotificaciones">Tienes {cantNotificaciones[0]?.Cant_Notificaciones || ""} notificaciones pendientes</h2>
-                <img src = "campanaIcon.png" className = "nIcon"></img>
+                <img src = "campanaIcon.png" className = "nIcon" alt = "campana"></img>
               </button>
 
               <div className="plantasWidget">
-                <h2 className="textoPlantasNecesitadas">Esto es otro texto de prueba</h2>
+                <h2 className="textoPlantasNecesitadas">Hay {cantPlantasNecesitadas} plantas que requieren atención. ¡No te olvides de ellas!</h2>
+                <img src = "planta9.gif"  style = {{width: '20vh', height: '20vh'}} alt = "campana"></img>
               </div>
             </div>
           </div>
@@ -219,7 +239,7 @@ const Dashboard = () => {
             <img src="planta6.gif" alt="Ingresar nueva planta" className="plantGif" />
           </div>
           <div className="infoPlanta">
-            <h2 className="textoPlantasNecesitadas">Última planta ingresada:</h2>
+            <h2 className="lastPlant">Última planta ingresada:</h2>
             {plantas.map((planta, index) => (
                 <div key={index}>
                     <h2 className='lastPlant'> {planta.nombre_comun}</h2>
@@ -266,7 +286,7 @@ const Dashboard = () => {
           <span>Recomendaciones para mis plantas</span>
         </div>
         <div className="dashboard-btn" onClick={goToDetect}>
-          <img src="planta9.gif" alt="Detectar planta" className="dashboard-icon" />
+          <img src="lupaPlanta.png" alt="Detectar planta" className="dashboard-icon" />
           <span>Detectar planta</span>
         </div>
       </div>

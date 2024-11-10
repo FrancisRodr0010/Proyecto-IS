@@ -161,25 +161,69 @@ const TablaPlantas = () => {
         planta.nombre_comun.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    const getColorForStatus = (estado) => {
+        if(estado === "Se requiere atención"){
+            return <h5 className = "card-text" style={{color: 'red'}}>Estado: {estado}</h5>
+        } else if(estado === "Estable"){
+            return <h5 className = "card-text" style={{color: '#5bd842'}}>Estado: {estado}</h5>
+        } else {
+            return <h5 className = "card-text">Estado: {estado}</h5>
+        }
+    };
+
+    const getImageForStatus = (estado) => {
+        if(estado === "Se requiere atención"){
+            return <img src = "warning.gif" alt="plantwarn" style={{width: '9vh', height: '9vh',}}></img>
+        } else if(estado === "Estable"){
+            return <img src = "checkPlant.gif" alt="plantcheck" style={{width: '9vh', height: '9vh',}}></img>
+        } else {
+            return <img src = "waitingPlant.png" alt="plantwait" style={{width: '9vh', height: '9vh',}}></img>
+        }
+    };
+
+    const getCardColorForStatus = (estado) => {
+        if(estado === "Se requiere atención"){
+            return '#feebe3';
+        } else {
+            return '#f8fee5';
+        }
+    };
+
     return (
         <div className="tabla-container">
             <h1 className="text-center">Mis plantas</h1>
+            <br />
             <input
                 type="text"
                 placeholder="Buscar por nombre común..."
                 className="form-control mb-3"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
+                style = {{width: '95%', position: 'relative', left: '5vh'}}
             />
             <div className="row">
                 {filteredPlantas.length > 0 ? (
                     filteredPlantas.map((planta) => (
-                        <div className="col-md-4 mb-4" key={planta.id}>
-                            <div className="card">
+                        <div className="col-md-4 mb-5" key={planta.id}>
+                            <div className="card" style={{backgroundColor: getCardColorForStatus(planta.estado), height: '110%'}}>
                                 <div className="card-body">
-                                    <h5 className="card-title">{planta.nombre_comun}</h5>
-                                    <p className="card-text">{planta.descripcion}</p>
-                                    <p className = "card-text">Estado: {planta.estado}</p>
+                                    <div className = "card-Row" style={{display: 'flex', paddingBottom: '3vh'}}>
+                                        <div style={{width: '90%'}}>
+                                            <h3 className="card-title">{planta.nombre_comun}</h3>
+                                            <p className="card-text">{planta.descripcion}</p>
+                                            <>{getColorForStatus(planta.estado)}</>
+                                        </div>
+                                        
+                                        {/*<h5 className = "card-text">Estado: {planta.estado}</h5> */}
+                                        <>{getImageForStatus(planta.estado)}</>
+                                    </div>
+
+                                    <button
+                                        className="btn btn-danger me-2"
+                                        onClick={() => handleEliminar(planta.id)}>
+                                        <img src="trashIcon.png" alt="Home" style={{width: '3vh', height: '3vh',}} />
+                                    </button>
+                                    
                                     <button
                                         className="btn btn-warning me-2"
                                         onClick={() => {
@@ -187,26 +231,23 @@ const TablaPlantas = () => {
                                             setnombreComun(planta.nombre_comun);
                                             setDescription(planta.descripcion);
                                             setFreqRiego(planta.frecuencia_riego);
-                                            setFreqFert(planta.frecuencia_riego);
+                                            setFreqFert(planta.frecuencia_fertilizacion);
                                         }}>
                                         Modificar
-                                    </button>
-                                    <button
-                                        className="btn btn-danger me-2"
-                                        onClick={() => handleEliminar(planta.id)}>
-                                        Eliminar
                                     </button>
 
                                     <button
                                         className="btn btn-info me-2"
                                         onClick={() => agregarRiego(planta.id)}>
-                                        Regar planta
+                                        Regar
+                                        <img src="regar2.png" alt="Home" style={{width: '3vh', height: '3vh',}} />
                                     </button>
 
                                     <button
                                         className="btn btn-success"
                                         onClick={() => agregarFertilizacion(planta.id)}>
-                                        Fertilizar planta
+                                        Fertilizar
+                                        <img src="fertilizar3.png" alt="Home" style={{width: '3vh', height: '3vh',}} />
                                     </button>
 
 
@@ -258,11 +299,13 @@ const TablaPlantas = () => {
                                         value={freqRiego}
                                         onChange={(e) => setFreqRiego(e.target.value)}
                                     >
+                                        <option value="">Seleccione una frecuencia</option>
                                         <option value = "1">1</option>
                                         <option value = "2">2</option>
                                         <option value = "3">3</option>
                                         <option value = "5">5</option>
                                         <option value = "7">7</option>
+                                        <option value = "10">10</option>
                                     </select>
 
                                 </div>
@@ -276,6 +319,7 @@ const TablaPlantas = () => {
                                         value={freqFert}
                                         onChange={(e) => setFreqFert(e.target.value)}
                                     >
+                                        <option value="">Seleccione una frecuencia</option>
                                         <option value = "20">20</option>
                                         <option value = "30">30</option>
                                         <option value = "40">40</option>

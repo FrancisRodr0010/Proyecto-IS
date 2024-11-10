@@ -74,9 +74,7 @@ const SignupForm = () => {
                     </button>
                 </form>
             </div>
-            <div style={styles.imageContainer}>
-                <img src="naturaleza1.png" alt="Gestión de Plantas" style={styles.image} />
-            </div>
+            
         </div>
     );
 };
@@ -87,11 +85,11 @@ const styles = {
         alignItems: 'center',
         justifyContent: 'center',
         height: '100vh',     
-        backgroundColor: '#f3f6e5',
-        paddingLeft: '15vw'
+        backgroundImage: 'url(https://www.floristeriamorris.com/wp-content/uploads/etapas-de-crecimiento-de-las-plantas.jpg)',
+        backgroundSize: 'cover',
     },
     formContainer: {
-        backgroundColor: '#ffffff',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
         padding: '2rem',
         borderRadius: '10px',
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
@@ -101,12 +99,12 @@ const styles = {
     },
     title: {
         fontSize: '2rem',
-        color: '#3b6e4f',
+        color: '#c0ff88',
         marginBottom: '0.5rem',
     },
     subtitle: {
         fontSize: '1rem',
-        color: '#757575',
+        color: '#c9e779',
         marginBottom: '2rem',
     },
     form: {
@@ -118,10 +116,12 @@ const styles = {
     },
     label: {
         fontSize: '1rem',
-        color: '#6b6b6b',
+        color: 'white',
         marginBottom: '0.5rem',
     },
     input: {
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        color: 'white',
         padding: '0.8rem',
         fontSize: '1rem',
         borderRadius: '5px',

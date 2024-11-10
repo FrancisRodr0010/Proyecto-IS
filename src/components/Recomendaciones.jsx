@@ -114,7 +114,6 @@ const styles = {
         flexDirection: 'column',
         alignItems: 'center',
         padding: '20px',
-        backgroundColor: '#f5f5f5',
         minHeight: '100vh',
     },
     title: {
@@ -125,7 +124,7 @@ const styles = {
     },
     grid: {
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
         gap: '20px',
         width: '100%',
         maxWidth: '1200px',
@@ -134,7 +133,7 @@ const styles = {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        backgroundColor: '#ffffff',
+        backgroundColor: '#f2ffe6',
         borderRadius: '12px',
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
         padding: '15px',

@@ -15,7 +15,8 @@ import Recomendaciones from './components/Recomendaciones';
 import Tareas from './components/Tareas';
 import DeleteProfile from './components/DeleteProfile';
 import Notificaciones from './components/Notificaciones';
-
+import ImageAnalyzer from './components/ImageAnalyzer';
+import Footer from './components/Footer';
 
 
 const queryClient = new QueryClient();
@@ -47,8 +48,12 @@ const App = () => {
                                     <Route path="modify" element={<ModifyProfile />} />
                                     <Route path="recomendaciones" element={<Recomendaciones />} />
                                     <Route path="mis-notificaciones" element={<Notificaciones />} />
+                                    <Route path="detectar-planta" element={<ImageAnalyzer />} />
                                 </Routes>
+                               
                               </div>
+                              <Footer />
+                              
                               
                           </>
                       }

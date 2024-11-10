@@ -1,7 +1,7 @@
 .perfil-container {
     display: flex;
     justify-content: space-around;
-    padding: 2rem;
+    padding: 1rem;
     background-color: #f4f8e1;
     transition: transform 0.3s ease, background 0.3s ease;
     animation: fadeIn 1s ease;
@@ -10,7 +10,7 @@
 .comingActivitiesContainer{
     display: flex;
     justify-content: space-around;
-    padding: 2rem;
+    padding: 1rem;
     background-color: #f4f8e1;
     transition: transform 0.3s ease, background 0.3s ease;
     animation: fadeIn 1s ease;
@@ -24,12 +24,31 @@
 .fill-Container{
     width: 25%;
     height: 50%;
-    background-color: #dff7d9;
+    background-color: #def7d9;
     padding: 1.5rem;
     border-radius: 10px;
+    border-style: solid;
+    border-color: rgb(169, 244, 166);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     text-align: center;
     
+}
+
+.clock-widget {
+    padding-top: 5vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.analog-clock {
+    margin-bottom: 15px;
+}
+
+.digital-time {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #04914a;
 }
 
 @keyframes fadeIn {
@@ -44,11 +63,11 @@
 
 .proxActivitiesSection{
     position: relative;
-    bottom: 12vh;
+    bottom: 17vh;
     width: 65%;
-    background-color: #f6fcd7;
+    background-color: #edfcd7;
     border-style: solid;
-    border-color: rgb(240, 248, 191);
+    border-color: rgb(219, 247, 167);
     padding: 1.5rem;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -134,6 +153,11 @@
     margin-bottom: 1rem;
 }
 
+.delete-button:hover{
+    background-color: #e65f5f;
+    transition: 0.5s;
+}
+
 .modify-button {
     background-color: #bbf87e;
     color: white;
@@ -145,6 +169,11 @@
     margin-bottom: 1rem;
 }
 
+
+.modify-button:hover{
+    background-color: #aee776;
+    transition: 0.5s;
+}
 
 .calendar-section {
     width: 65%;
@@ -179,7 +208,7 @@
 }
 
 .proxactivity-card {
-    background-color: #f4fac7;
+    background-color: #eafac7;
     border-radius: 8px;
     padding: 1vh;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -187,7 +216,7 @@
 }
 
 .proxactivity-card:hover{
-    background-color: #e3e9b8;
+    background-color: #dff1c2;
     transition: 0.4s;
 }
 

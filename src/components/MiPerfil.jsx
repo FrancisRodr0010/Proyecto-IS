@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import './miPerfil.css'; // External CSS for styling
+import Clock from 'react-clock';
+import 'react-clock/dist/Clock.css'; // Importa los estilos de react-clock
+import './miPerfil.css';
 
 const MiPerfil = () => {
     const navigate = useNavigate();
@@ -13,18 +15,25 @@ const MiPerfil = () => {
     const [proxTareas, setProxTareas] = useState([]);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(true);
+    const [time, setTime] = useState(new Date());
+
+    // Actualizar la hora cada segundo
+    useEffect(() => {
+        const interval = setInterval(() => setTime(new Date()), 1000);
+        return () => clearInterval(interval);
+    }, []);
 
     useEffect(() => {
         window.scrollTo(0, 0);
         const verificarSesion = async () => {
             try {
-            const response = await axios.get('http://localhost/API/verificar_sesion.php', { withCredentials: true });
-            if (!response.data.sesion_activa) {
-                navigate('/'); // Redirige a la raíz si no hay sesión activa
-            }
+                const response = await axios.get('http://localhost/API/verificar_sesion.php', { withCredentials: true });
+                if (!response.data.sesion_activa) {
+                    navigate('/');
+                }
             } catch (error) {
-            console.error('Error al verificar la sesión:', error);
-            navigate('/');
+                console.error('Error al verificar la sesión:', error);
+                navigate('/');
             }
         };
         verificarSesion();
@@ -37,11 +46,7 @@ const MiPerfil = () => {
         const fetchTasks = async () => {
             try {
                 const response = await axios.get("http://localhost/API/getTasks.php", { withCredentials: true });
-                if (response.data && response.data.data) {
-                    setTareas(response.data.data.slice(0, 2)); // Obtiene solo las primeras dos tareas
-                } else {
-                    setError('No se encontraron tareas');
-                }
+                setTareas(response.data.data.slice(0, 2));
             } catch (err) {
                 console.error('Error al cargar las tareas:', err);
                 setError('Error al cargar las tareas');
@@ -50,16 +55,10 @@ const MiPerfil = () => {
             }
         };
 
-
         const fetchProxTasks = async () => {
             try {
                 const response = await axios.get("http://localhost/API/getProxTasks.php", { withCredentials: true });
-                if (response.data && response.data.data) {
-                    console.log(response.data.data);
-                    setProxTareas(response.data.data.slice(0, 2)); // Obtiene solo las primeras dos tareas
-                } else {
-                    setError('No se encontraron tareas');
-                }
+                setProxTareas(response.data.data.slice(0, 3));
             } catch (err) {
                 console.error('Error al cargar las tareas:', err);
                 setError('Error al cargar las tareas');
@@ -71,6 +70,16 @@ const MiPerfil = () => {
         fetchTasks();
         fetchProxTasks();
     }, [navigate]);
+
+    const handleLogout = async () => {
+        try {
+            await axios.get('http://localhost/API/logout.php', { withCredentials: true });
+            localStorage.removeItem('username');
+            navigate('/');
+        } catch (error) {
+            console.error('Error al cerrar sesión:', error);
+        }
+    };
 
     return (
         <> 
@@ -87,13 +96,17 @@ const MiPerfil = () => {
                 <div className="follow-info">
                     <button className="delete-button" onClick={() => navigate('/delete-my-profile')}>Eliminar cuenta</button>
                 </div>
+
+                <div className="follow-info">
+                    <button className="delete-button" onClick={handleLogout}>Cerrar sesión</button>
+                </div>
             </div>
             
             {/* Sección de Actividades Recientes */}
             <div className="calendar-section">
                 <h5 className="card2-text">Actividad reciente</h5>
                 {loading ? (
-                    <img src = "planta8.gif" alt="CargandoGif" className='Cargando'></img> 
+                    <img src="planta8.gif" alt="CargandoGif" className='Cargando' /> 
                 ) : error ? (
                     <p className="error-message">{error}</p>
                 ) : (
@@ -110,16 +123,18 @@ const MiPerfil = () => {
             </div>
         </div>
         
-
         <div className="comingActivitiesContainer">
-            <div className = "fill-Container">
-
+            <div className="fill-Container">
+                <div className="clock-widget">
+                    <Clock value={time} className="analog-clock" />
+                    <p className="digital-time">{time.toLocaleTimeString()}</p>
+                </div>
             </div>
 
-            <div className = "proxActivitiesSection">
-                <h5 className="card3-text">Pendiente a realizar</h5>
+            <div className="proxActivitiesSection">
+                <h5 className="card3-text">Pendiente por realizar</h5>
                 {loading ? (
-                    <img src = "planta8.gif" alt="CargandoGif" className='Cargando'></img> 
+                    <img src="planta8.gif" alt="CargandoGif" className='Cargando' />
                 ) : error ? (
                     <p className="error-message">{error}</p>
                 ) : (
@@ -133,10 +148,8 @@ const MiPerfil = () => {
                         ))}
                     </div>
                 )}
-
             </div>
         </div>
-        
         </>
     );
 };

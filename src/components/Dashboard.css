@@ -10,9 +10,50 @@ h1, h5 {
 }
 
 
+@keyframes animate {
+  0%{
+    background-attachment: fixed;
+    background-image: url(https://i0.wp.com/planteateloplantas.com/wp-content/uploads/2023/06/6-plantas-con-flores-para-jardin-Dedalera-Digitalis-Purpurea-boca-de-dragon-Antirrhinum-Majus-Claveles-Tagetes-Planta-del-Tabaco-petunias-amapolaswww.planteateloplantas.com-4.png?fit=1280%2C720&ssl=1);
+   
+    
+  }
+
+
+
+  35%{
+    background-attachment: fixed;
+    background-image: url(https://www.hola.com/horizon/landscape/9d6dc3d4fea3-plantas-exterior-sombra-01t-t.jpg);
+
+  }
+
+
+  55%{
+
+    background-attachment: fixed;
+    background-image: url(https://www.hola.com/horizon/landscape/9d6dc3d4fea3-plantas-exterior-sombra-01t-t.jpg);
+
+  }
+
+
+  80%{
+
+    background-attachment: fixed;
+    background-image: url(https://www.mndelgolfo.com/blog/wp-content/uploads/2021/04/Sabes-como-lograr-que-el-jardin-de-tu-hogar-luzca-increible-1024x576.jpg);
+
+  }
+
+  100%{
+  
+    background-attachment: fixed;
+    background-image: url(https://www.mndelgolfo.com/blog/wp-content/uploads/2021/04/Sabes-como-lograr-que-el-jardin-de-tu-hogar-luzca-increible-1024x576.jpg);
+
+  }
+
+
+}
+
 
 .hero-image {
-  background-image: url('https://media.admagazine.com/photos/618a675951ab72df0a76433a/3:2/w_3000,h_2000,c_limit/68307.jpg'); 
   background-size: cover;
   background-position: center;
   color: white;
@@ -20,6 +61,13 @@ h1, h5 {
   text-align: center;
   border-radius: 10px;
   margin-bottom: 30px;
+  animation: animate;
+  animation-direction: alternate-reverse;
+  animation-play-state: running;
+  animation-timing-function: ease-in-out;
+  animation-duration: 5s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
 }
 
 .top-bar{
@@ -62,14 +110,22 @@ h1, h5 {
   width: 75%;
 }
 
-.textoPlantasNecesitadas{
+.lastPlant{
   text-align: center;
   padding:1vh
 }
 
+.textoPlantasNecesitadas{
+  padding:3vh;
+  color: rgb(6, 124, 23);
+  font-size: 40px;
+  font-weight: 100px;
+  width: 70%;
+}
+
 .plantasWidget {
+  display: flex;
   position: relative;
-  justify-items: center;
   top: 1vh;
   height: 45%;
   background: linear-gradient(135deg, #7ecf73, #8ee280);
@@ -249,6 +305,8 @@ h1, h5 {
 .dashboard-btn:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Efecto de hover */
+  background-color: #d5fed1;
+  transition: 0.5s;
 }
 
 .dashboard-icon {

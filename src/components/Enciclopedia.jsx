@@ -305,9 +305,9 @@ const Enciclopedia = () => {
                     model: "gpt-3.5-turbo",
                     messages: [
                         { role: "system", content: "Eres un experto en cuidado de plantas." },
-                        { role: "user", content: `Busca información como frecuencia de riego, fertilizacion y asoleo sobre la planta: ${plantName}, incluyendo datos importantes extras. Si consideras que no es una planta o flor, o que carece de sentido el texto, colocar 'lo ingresado no es una planta'. Por favor, limita tu respuesta a 250 tokens y asegúrate de que la información sea coherente.` }
+                        { role: "user", content: `Busca información como frecuencia de riego, fertilizacion y asoleo sobre la planta: ${plantName}, incluyendo datos importantes extras. Si consideras que no es una planta o flor, o que carece de sentido el texto, colocar 'lo ingresado no es una planta'. Por favor, limita tu respuesta a 300 tokens y asegúrate de que la información sea coherente.` }
                     ],
-                    max_tokens: 250
+                    max_tokens: 300
                 },
                 {
                     headers: {
