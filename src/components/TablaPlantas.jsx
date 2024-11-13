@@ -211,6 +211,7 @@ const TablaPlantas = () => {
                                         <div style={{width: '90%'}}>
                                             <h3 className="card-title">{planta.nombre_comun}</h3>
                                             <p className="card-text">{planta.descripcion}</p>
+                                            <p>Tipo de planta: {planta.Nombre}</p>
                                             <>{getColorForStatus(planta.estado)}</>
                                         </div>
                                         

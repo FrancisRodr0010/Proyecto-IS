@@ -16,22 +16,34 @@ const Administracion = () => {
   const [plantas, setPlantas] = useState([]);
   const [cantNotificaciones, setCantNotificaciones] = useState([]);
   const [cantPlantasNecesitadas, setCantPlantasNecesitadas] = useState(0)
+  const [noAdmin, setNoAdmin] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    const verificarSesion = async () => {
-      try {
-        const response = await axios.get('http://localhost/API/verificar_sesion.php', { withCredentials: true });
-        if (!response.data.sesion_activa) {
-          navigate('/'); // Redirige a la raíz si no hay sesión activa
+    const role = localStorage.getItem('rol');
+    console.log(role);
+
+    if(role !== "administrador"){
+      setNoAdmin(true);
+    } else {
+      const verificarSesion = async () => {
+        try {
+          const response = await axios.get('http://localhost/API/verificar_sesion.php', { withCredentials: true });
+          if (!response.data.sesion_activa) {
+            navigate('/'); // Redirige a la raíz si no hay sesión activa
+          }
+        } catch (error) {
+          console.error('Error al verificar la sesión:', error);
+          navigate('/');
         }
-      } catch (error) {
-        console.error('Error al verificar la sesión:', error);
-        navigate('/');
-      }
-    };
-    verificarSesion();
+      };
+      verificarSesion();
+  
+    }
+
+    
+    
     
 
     const fetchWeather = async (latitude, longitude) => {
@@ -173,125 +185,116 @@ const Administracion = () => {
   const goToEditProfile = () => navigate('/perfil');
   const goToRecommendations = () => navigate('/recomendaciones');
   const goToDetect = () => navigate('/detectar-planta');
-  const goToNotifications = () => navigate('/mis-notificaciones')
+  const goToNotifications = () => navigate('/mis-notificaciones');
+  const goToTypePlant = () => navigate('/agregar-tipo-planta');
+  const goToTableTypes = () => navigate('/tipos-de-planta');
 
-  return (
-    <div className="dashboard-container">
-      {/* Hero Image */}
-      <div className="hero-image">
-        <h1>Gestión de Plantas</h1>
-        <h5>Monitorea y cuida de tus plantas con facilidad.</h5>
-      </div>
-
-      <br />
-      <br />
-
-      <div className="date-time">
-        <h2>{currentDateTime}</h2>
-      </div>
-      
-      <br />
-      <br />
+  if(noAdmin){
+    return <h1>No tienes permisos para ver este panel</h1>
+  } else {
+      return (
+        <div className="dashboard-container">
+          {/* Hero Image */}
+          <div className="hero-image">
+            <h1>Gestión de Plantas</h1>
+            <h5>Monitorea y cuida de tus plantas con facilidad.</h5>
+          </div>
     
-      {/* Widget de Clima */}
-      {weather && (
-        loading ? (
-          <img src="planta8.gif" alt="CargandoGif" className="Cargando" />
-        ) : error ? (
-          <p className="error-message">{error}</p>
-        ) : (
-          <div className="top-bar">
-            <div className="weather-widget">
-              <img
-                src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
-                alt="Icono de clima"
-                className="weather-icon"
-              />
-              <div className="weather-info">
-                <h2 className="temp">{Math.round(weather.main.temp)}°C</h2>
-                <p className="location">{weather.name}</p>
-                <div className="additional-info">
-                  <h4>{weather.weather[0].description}</h4>
-                  <p>Humedad: {weather.main.humidity}%</p>
-                  <p>Viento: {Math.round(weather.wind.speed * 3.6)} km/h</p>
+          <br />
+          <br />
+    
+          <div className="date-time">
+            <h2>{currentDateTime}</h2>
+          </div>
+          
+          <br />
+          <br />
+        
+          {/* Widget de Clima */}
+          {weather && (
+            loading ? (
+              <img src="planta8.gif" alt="CargandoGif" className="Cargando" />
+            ) : error ? (
+              <p className="error-message">{error}</p>
+            ) : (
+              <div className="top-bar">
+                <div className="weather-widget">
+                  <img
+                    src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+                    alt="Icono de clima"
+                    className="weather-icon"
+                  />
+                  <div className="weather-info">
+                    <h2 className="temp">{Math.round(weather.main.temp)}°C</h2>
+                    <p className="location">{weather.name}</p>
+                    <div className="additional-info">
+                      <h4>{weather.weather[0].description}</h4>
+                      <p>Humedad: {weather.main.humidity}%</p>
+                      <p>Viento: {Math.round(weather.wind.speed * 3.6)} km/h</p>
+                    </div>
+                  </div>
                 </div>
+    
+              <div className="uniquePlantContainer">
+                <div className="imagePlanta">
+                  <img src="planta6.gif" alt="Ingresar nueva planta" className="plantGif" />
+                </div>
+                <div className="infoPlanta">
+                  <h2 className="lastPlant">Última planta ingresada:</h2>
+                  {plantas.map((planta, index) => (
+                      <div key={index}>
+                          <h2 className='lastPlant'> {planta.nombre_comun}</h2>
+                      </div>
+                  ))}
+                </div>
+            </div> 
+    
               </div>
+            )
+          )}
+    
+          <div className="secondTopBar">
+          
+    
+          </div>
+    
+          <h2 className="selectionText">¿Qué deseas hacer?</h2>
+          <br />
+          <br />
+    
+          <div className="button-grid">
+            <div className="dashboard-btn" onClick={goToNewPlant}>
+              <img src="planta1.png" alt="Ingresar nueva planta" className="dashboard-icon" />
+              <span>Ingresar nueva planta</span>
+            </div>
+            <div className="dashboard-btn" onClick={goToModifyGarden}>
+              <img src="planta2.png" alt="Modificar huerto" className="dashboard-icon" />
+              <span>Modificar huerto - Ver mis plantas</span>
+            </div>
+            <div className="dashboard-btn" onClick={goToEditProfile}>
+              <img src="perfiledit.png" alt="Editar Perfil" className="dashboard-icon" />
+              <span>Perfil</span>
+            </div>
+            <div className="dashboard-btn" onClick={goToDetect}>
+              <img src="lupaPlanta.png" alt="Detectar planta" className="dashboard-icon" />
+              <span>Detectar planta</span>
+            </div>
+            <div className="dashboard-btn" onClick={goToTypePlant}>
+              <img src="naturaleza1.png" alt="Detectar planta" className="dashboard-icon" />
+              <span>Agregar tipo de planta</span>
             </div>
 
-            <div className="leftContainer">
-              <button className="notificacionesWidget" onClick={goToNotifications}>
-                <h2 className="textoNotificaciones">Tienes {cantNotificaciones[0]?.Cant_Notificaciones || ""} notificaciones pendientes</h2>
-                <img src = "campanaIcon.png" className = "nIcon" alt = "campana"></img>
-              </button>
-
-              <div className="plantasWidget">
-                <h2 className="textoPlantasNecesitadas">Hay {cantPlantasNecesitadas} plantas que requieren atención. ¡No te olvides de ellas!</h2>
-                <img src = "planta9.gif"  style = {{width: '20vh', height: '20vh'}} alt = "campana"></img>
-              </div>
+            <div className="dashboard-btn" onClick={goToTableTypes}>
+              <img src="naturaleza1.png" alt="Detectar planta" className="dashboard-icon" />
+              <span>Ver tipos de plantas</span>
             </div>
-          </div>
-        )
-      )}
 
-      <div className="secondTopBar">
-        <div className="uniquePlantContainer">
-          <div className="imagePlanta">
-            <img src="planta6.gif" alt="Ingresar nueva planta" className="plantGif" />
-          </div>
-          <div className="infoPlanta">
-            <h2 className="lastPlant">Última planta ingresada:</h2>
-            {plantas.map((planta, index) => (
-                <div key={index}>
-                    <h2 className='lastPlant'> {planta.nombre_comun}</h2>
-                </div>
-            ))}
           </div>
         </div>
+      );
+    };
+  }
 
-        <div className="randomTipContainer">
-          <h2 className="tipText">Tip</h2>
-          <div className="response-tip">
-            <h1 className="myTip">{responseText || <img src="planta8.gif" alt="CargandoGif" className="Cargando" />}</h1>
-          </div>
-        </div>
-      </div>
-
-      <h2 className="selectionText">¿Qué deseas hacer?</h2>
-      <br />
-      <br />
-
-      <div className="button-grid">
-        <div className="dashboard-btn" onClick={goToNewPlant}>
-          <img src="planta1.png" alt="Ingresar nueva planta" className="dashboard-icon" />
-          <span>Ingresar nueva planta</span>
-        </div>
-        <div className="dashboard-btn" onClick={goToTasks}>
-          <img src="planta3.png" alt="Crear nuevo huerto" className="dashboard-icon" />
-          <span>Inspeccionar tareas</span>
-        </div>
-        <div className="dashboard-btn" onClick={goToModifyGarden}>
-          <img src="planta2.png" alt="Modificar huerto" className="dashboard-icon" />
-          <span>Modificar huerto - Ver mis plantas</span>
-        </div>
-        <div className="dashboard-btn" onClick={goToEncyclopedia}>
-          <img src="enciclopedia.png" alt="Enciclopedia" className="dashboard-icon" />
-          <span>Enciclopedia</span>
-        </div>
-        <div className="dashboard-btn" onClick={goToEditProfile}>
-          <img src="perfiledit.png" alt="Editar Perfil" className="dashboard-icon" />
-          <span>Perfil</span>
-        </div>
-        <div className="dashboard-btn" onClick={goToRecommendations}>
-          <img src="planta4.png" alt="Recomendaciones" className="dashboard-icon" />
-          <span>Recomendaciones para mis plantas</span>
-        </div>
-        <div className="dashboard-btn" onClick={goToDetect}>
-          <img src="lupaPlanta.png" alt="Detectar planta" className="dashboard-icon" />
-          <span>Detectar planta</span>
-        </div>
-      </div>
-    </div>
-  );
-};
+  
 
 export default Administracion;

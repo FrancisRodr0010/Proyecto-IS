@@ -7,10 +7,10 @@ header("Access-Control-Allow-Credentials: true"); // Permitir el uso de credenci
 header("Content-Type: application/json; charset=UTF-8");
 
 // Conectar a la base de datos
-$servername = "databaseis.c3g4iieacsm1.us-west-1.rds.amazonaws.com"; // Cambia esto por el endpoint de tu base de datos RDS
-$username = "admin"; // Cambia esto por tu usuario de RDS
-$password = "rootaws123."; // Cambia esto por tu contraseña de RDS
-$dbname = "databaseis"; // Cambia esto por el nombre de tu base de datos en RDS
+$servername = "dbis.cpmigq8o8do7.us-east-2.rds.amazonaws.com";
+$username = "admin";
+$password = "root_0010";
+$dbname = "dbis";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -29,7 +29,11 @@ if (!isset($_SESSION['user_id'])) {
 $usuario_id = $_SESSION['user_id'];
 
 // Preparar la consulta para obtener las plantas del usuario logueado
-$sql = "SELECT id, nombre_comun, nombre_cientifico, descripcion, estado, frecuencia_riego, frecuencia_fertilizacion FROM libraryPlants WHERE usuario_id = ? ORDER BY fecha_creacion DESC";
+$sql = "SELECT l.id, l.nombre_comun, l.nombre_cientifico, l.descripcion, l.estado, l.frecuencia_riego, l.frecuencia_fertilizacion, tp.Nombre
+FROM libraryPlants l
+JOIN  tipoPlanta tp ON l.id_Tipo = tp.id_Tipo
+WHERE l.usuario_id = ?
+ORDER BY fecha_creacion DESC";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $usuario_id);
 $stmt->execute();

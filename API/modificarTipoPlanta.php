@@ -21,22 +21,21 @@ if ($conn->connect_error) {
 // Obtener datos desde el request
 $data = json_decode(file_get_contents("php://input"));
 
+
 if (isset($data->id)) {
     $id = $data->id;
-    $nombre_comun = $data->nombre_comun;
+    $nombre = $data->nombre;
     $descripcion = $data->descripcion;
-    $frecuencia_riego = (int)$data->frecuencia_riego;
-    $frecuencia_fertilizacion = (int)$data->frecuencia_fertilizacion;
 
-    // Consultar para modificar la planta
-    $sql = "UPDATE plantas SET nombre_comun = ?, descripcion = ?, frecuencia_riego = ?, frecuencia_fertilizacion = ? WHERE id = ?";
+
+    $sql = "UPDATE tipoPlanta SET Nombre = ?, Descripcion = ? WHERE id_Tipo = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssiii", $nombre_comun, $descripcion, $frecuencia_riego, $frecuencia_fertilizacion, $id); // Cambia a "ssi"
+    $stmt->bind_param("ssi", $nombre, $descripcion, $id); 
 
     if ($stmt->execute()) {
         echo json_encode(array("success" => true));
     } else {
-        echo json_encode(array("success" => false, "message" => "Error al modificar la planta"));
+        echo json_encode(array("success" => false, "message" => "Error al modificar el tipo de planta planta"));
     }
 
     $stmt->close();

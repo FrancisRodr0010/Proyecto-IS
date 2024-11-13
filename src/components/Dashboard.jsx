@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -223,8 +224,12 @@ const Dashboard = () => {
 
             <div className="leftContainer">
               <button className="notificacionesWidget" onClick={goToNotifications}>
-                <h2 className="textoNotificaciones">Tienes {cantNotificaciones[0]?.Cant_Notificaciones || ""} notificaciones pendientes</h2>
-                <img src = "campanaIcon.png" className = "nIcon" alt = "campana"></img>
+                  <h2 className="textoNotificaciones">
+                      {cantNotificaciones[0]?.Cant_Notificaciones === 0 
+                          ? "No tiene notificaciones pendientes" 
+                          : `Tienes ${cantNotificaciones[0]?.Cant_Notificaciones} notificaciones pendientes`}
+                  </h2>
+                  <img src="campanaIcon.png" className="nIcon" alt="campana" />
               </button>
 
               <div className="plantasWidget">

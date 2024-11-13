@@ -1,114 +1,93 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const Recomendaciones = () => {
-    const [plantNames, setPlantNames] = useState([]);
-    const [recommendations, setRecommendations] = useState({});
-    const isMounted = useRef(false);
-
+    const [plantRecommendations, setPlantRecommendations] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
+
     useEffect(() => {
+        window.scrollTo(0, 0);
         const verificarSesion = async () => {
-          try {
-            const response = await axios.get('http://localhost/API/verificar_sesion.php', { withCredentials: true });
-            console.log(response.data)
-            console.log(response.data.sesion_activa)
-            if (!response.data.sesion_activa) {
-              navigate('/'); // Redirige a la raíz si no hay sesión activa
+            try {
+                const response = await axios.get('http://localhost/API/verificar_sesion.php', { withCredentials: true });
+                if (!response.data.sesion_activa) {
+                    navigate('/');
+                }
+            } catch (error) {
+                console.error('Error al verificar la sesión:', error);
+                navigate('/');
             }
-          } catch (error) {
-            console.error('Error al verificar la sesión:', error);
-            navigate('/');
-          }
         };
     
         verificarSesion();
-      }, [navigate]);
-
-    
+    }, [navigate]);
 
     useEffect(() => {
-        if (!isMounted.current) { 
-            axios.get("http://localhost/API/getPlantNames.php")
-            .then(response => setPlantNames(response.data))
-            .catch(error => console.error("Error al obtener nombres de plantas:", error));
-            isMounted.current = true;
-        }
+        setIsLoading(true);
+        const fetchPlantRecommendations = async () => {
+            try {
+                const response = await axios.get("http://localhost/API/getPlantsforTips.php", {
+                    withCredentials: true,
+                });
+                if (response.data.success) {                   
+                    setPlantRecommendations(response.data.data);
+                }
+            } catch (error) {
+                console.error("Error al obtener recomendaciones de plantas:", error);
+            }
+            setIsLoading(false);
+        };
+
+        fetchPlantRecommendations();
     }, []);
 
-    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
-    // const fetchRecommendations = useCallback(async () => {
-    //     const newRecommendations = {};
-    //     const batchSize = 5;
-
-    //     for (let i = 0; i < plantNames.length; i += batchSize) {
-    //         const batch = plantNames.slice(i, i + batchSize);
-    //         const requests = batch.map(name =>
-    //             axios.post("https://api.openai.com/v1/chat/completions", {
-    //                 model: "gpt-3.5-turbo",
-    //                 messages: [
-    //                     { role: "system", content: "Eres un experto en cuidado de plantas." },
-    //                     { role: "user", content: `Dame recomendaciones sobre la planta llamada: ${name}. Si consideras que no es una planta o flor indicalo. Por favor, limita tu respuesta a 200 tokens y asegúrate de que la información sea coherente.` }
-    //                 ],
-    //                 max_tokens: 200
-    //             }, {
-    //                 headers: {
-    //                     "Content-Type": "application/json",
-    //                     "Authorization": "Bearer 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" // Asegúrate de reemplazar con tu clave API
-    //                 }
-    //             }).then(response => {
-    //                 newRecommendations[name] = response.data.choices[0].message.content;
-    //             }).catch(error => {
-    //                 console.error(`Error al obtener recomendación para ${name}:`, error);
-    //                 newRecommendations[name] = "No se pudo obtener la recomendación.";
-    //             })
-    //         );
-    //         await Promise.all(requests);
-    //         await sleep(2000);
-    //     }
-
-    //     setRecommendations(newRecommendations);
-    // }, [plantNames]);
-
-    // useEffect(() => {
-    //     if (plantNames.length > 0) {
-    //         fetchRecommendations();
-    //     }
-    // }, [plantNames, fetchRecommendations]);
-
     return (
-        <div style={styles.container}>
-            <h2 style={styles.title}>Recomendaciones de Cuidado para tus Plantas</h2>
-            <div style={styles.grid}>
-                {plantNames.map(name => (
-                    <div key={name} style={styles.card}>
-                        <img
-                            src="planta5.png"
-                            alt="Imagen de planta"
-                            style={styles.image}
-                        />
-                        <div style={styles.textContainer}>
-                            <h3 style={styles.plantName}>{name}</h3>
-                            <p style={styles.recommendation}>
-                                {recommendations[name] || <><img src="planta8.gif" alt="CargandoGif" style={styles.loadingGif} /> <p>Cargando...</p> </>}
-                            </p>
-                        </div>
+        <div>
+            {isLoading ? (
+                <div className="loading">
+                    <img src="planta8.gif" alt="CargandoGif" style={{ width: '9vh', height: '9vh' }} />
+                    <p>Cargando...</p>
+                </div>
+            ) : (
+                <div style={styles.container}>
+                    <h2 style={styles.title}>Recomendaciones de Cuidado para tus Plantas</h2>
+                    <div style={styles.grid}>
+                        {plantRecommendations.length > 0 ? (
+                            plantRecommendations.map((plant, index) => (
+                                <div key={index} style={styles.card}>
+                                    <img
+                                        src="planta5.png"
+                                        alt="Imagen de planta"
+                                        style={styles.image}
+                                    />
+                                    <div style={styles.textContainer}>
+                                        <h3 style={styles.plantName}>{plant.nombre_comun}</h3>
+                                        <p style={styles.recommendation}>
+                                            {plant.consejo}
+                                        </p>
+                                    </div>
+                                </div>
+                            ))
+                        ) : (
+                            <div>
+                                <img src="planta8.gif" alt="CargandoGif" style={styles.loadingGif} />
+                                <p>Cargando...</p>
+                            </div>
+                        )}
                     </div>
-                ))}
-            </div>
+                </div>
+            )}
         </div>
     );
 };
 
 const styles = {
-
     loadingGif: {
         width: '50px',
         height: '50px',
     },
-
     container: {
         display: 'flex',
         flexDirection: 'column',

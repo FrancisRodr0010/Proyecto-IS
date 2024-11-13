@@ -20,6 +20,8 @@ import Footer from './components/Footer';
 import Administracion from './components/Administracion';
 import AgregarPlantaAdmin from './components/AgregarPlantaAdmin';
 import TablaPlantasAdmin from './components/TablaPlantasAdmin';
+import AgregarTipoPlanta from './components/AgregarTipoPlanta';
+import TablaTipoPlantas from './components/TablaTipoPlantas';
 
 const queryClient = new QueryClient();
 
@@ -54,6 +56,8 @@ const App = () => {
                                     <Route path="mis-notificaciones" element={<Notificaciones />} />
                                     <Route path="detectar-planta" element={<ImageAnalyzer />} />
                                     <Route path="modificarAdmin" element={<TablaPlantasAdmin />} />
+                                    <Route path="agregar-tipo-planta" element={<AgregarTipoPlanta />} />
+                                    <Route path="tipos-de-planta" element={<TablaTipoPlantas />} />
                                 </Routes>
                                
                               </div>

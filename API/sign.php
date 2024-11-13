@@ -6,10 +6,10 @@ header("Content-Type: application/json; charset=UTF-8");
 
 
 // Conexión a la base de datos
-$servername = "databaseis.c3g4iieacsm1.us-west-1.rds.amazonaws.com"; // Cambia esto por el endpoint de tu base de datos RDS
-$username = "admin"; // Cambia esto por tu usuario de RDS
-$password = "rootaws123."; // Cambia esto por tu contraseña de RDS
-$dbname = "databaseis"; // Cambia esto por el nombre de tu base de datos en RDS
+$servername = "dbis.cpmigq8o8do7.us-east-2.rds.amazonaws.com";
+$username = "admin";
+$password = "root_0010";
+$dbname = "dbis";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 

@@ -8,10 +8,10 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 // Configuración de conexión
-$servername = "databaseis.c3g4iieacsm1.us-west-1.rds.amazonaws.com";
+$servername = "dbis.cpmigq8o8do7.us-east-2.rds.amazonaws.com";
 $username = "admin";
-$password = "rootaws123.";
-$dbname = "databaseis";
+$password = "root_0010";
+$dbname = "dbis";
 
 // Crear la conexión
 $conn = new mysqli($servername, $username, $password, $dbname);

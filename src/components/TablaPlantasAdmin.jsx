@@ -14,10 +14,18 @@ const TablaPlantasAdmin = () => {
     const [freqFert, setFreqFert] = useState('');
     const [searchTerm, setSearchTerm] = useState(''); // Estado para el filtro
     const navigate = useNavigate('');
+    const [noAdmin, setNoAdmin] = useState(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        const verificarSesion = async () => {
+
+        const role = localStorage.getItem('rol');
+        console.log(role);
+
+        if(role !== "administrador"){
+            setNoAdmin(true);
+        } else {
+            const verificarSesion = async () => {
           try {
             const response = await axios.get('http://localhost/API/verificar_sesion.php', { withCredentials: true });
             console.log(response.data)
@@ -25,17 +33,21 @@ const TablaPlantasAdmin = () => {
             if (!response.data.sesion_activa) {
               navigate('/'); // Redirige a la raíz si no hay sesión activa
             }
-          } catch (error) {
-            console.error('Error al verificar la sesión:', error);
-            navigate('/');
-          }
-        };
+                } catch (error) {
+                    console.error('Error al verificar la sesión:', error);
+                    navigate('/');
+                }
+                verificarSesion();
+            };
+        }
+        
+        
     
-        verificarSesion();
+        
       }, [navigate]);
     
 
-    const handlereturn = () => { navigate('/Dashboard') }
+    const handlereturn = () => { navigate('/administracion') }
 
     
 
@@ -84,9 +96,9 @@ const TablaPlantasAdmin = () => {
                     model: 'gpt-3.5-turbo',
                     messages: [
                         { role: "system", content: "Eres un experto en cuidado de plantas." },
-                        { role: "user", content: `Dame consejos de cuidado para la planta llamada "${planta.nombre_comun}" y algunos detalles como con que tipo de plantas esta convive mejor y con cuales no, limita tu respuesta a 200 tokens porfavor.` }
+                        { role: "user", content: `Dame consejos de cuidado para la planta llamada "${planta.nombre_comun}" y algunos detalles como con que tipo de plantas esta convive mejor y con cuales no, limita tu respuesta a 300 tokens porfavor.` }
                     ],
-                    max_tokens: 200
+                    max_tokens: 300
                 },
                 {
                     headers: {
@@ -167,6 +179,8 @@ const TablaPlantasAdmin = () => {
         fetchPlantas();
     }, []);
 
+    if(noAdmin) return <h1>No tienes permisos para ver este panel</h1>
+
     if (loading) return <img src = "planta8.gif" alt="CargandoGif" className='Cargando'></img>;
     if (error) return <p>{error}</p>;
 
@@ -226,6 +240,7 @@ const TablaPlantasAdmin = () => {
                                             <h3 className="card-title">{planta.nombre_comun}</h3>
                                             <p className="card-text">{planta.descripcion}</p>
                                             <>{getColorForStatus(planta.estado)}</>
+                                            <p>Tipo de planta: {planta.Nombre}</p>
                                         </div>
                                         
                                         {/*<h5 className = "card-text">Estado: {planta.estado}</h5> */}

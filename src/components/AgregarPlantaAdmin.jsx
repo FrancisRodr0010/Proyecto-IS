@@ -13,6 +13,10 @@ const AgregarPlantaAdmin = () => {
     const [plantaSeleccionada, setPlantaSeleccionada] = useState('');
     const [plantaInfo, setPlantaInfo] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [noAdmin, setNoAdmin] = useState(false);
+    const [selectedTipo, setSelectedTipo] = useState('');
+    const [tipoPlantas, setTipoPlantas] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [mostrarFormularioManual, setMostrarFormularioManual] = useState(false);
     const [plantaManual, setPlantaManual] = useState({
         nombre_comun: '',
@@ -27,26 +31,61 @@ const AgregarPlantaAdmin = () => {
         queryFn: fetchPlantas,
     });
 
+    
+
     const navigate = useNavigate();
     useEffect(() => {
-        window.scrollTo(0, 0);
-        const verificarSesion = async () => {
+
+        const role = localStorage.getItem('rol');
+        console.log(role);
+
+        if(role !== "administrador"){
+            setNoAdmin(true);
+        } else {
+            window.scrollTo(0, 0);
+            const verificarSesion = async () => {
             try {
                 const response = await axios.get('http://localhost/API/verificar_sesion.php', { withCredentials: true });
                 console.log(response.data);
                 if (!response.data.sesion_activa) {
                     navigate('/');
                 }
-            } catch (error) {
-                console.error('Error al verificar la sesión:', error);
-                navigate('/');
-            }
+                } catch (error) {
+                    console.error('Error al verificar la sesión:', error);
+                    navigate('/');
+                }
         };
 
-        verificarSesion();
+            verificarSesion();
+        }
+        
     }, [navigate]);
 
-    const handlereturn = () => navigate('/Dashboard');
+    const handlereturn = () => navigate('/administracion');
+
+
+    const fetchTipoPlantas = async () => {
+        try {
+            const response = await axios.get('http://localhost/API/getTypePlants.php', { withCredentials: true });
+            if (response.data && response.data.success && response.data.data) {
+                setTipoPlantas(response.data.data);
+            } else {
+                console.log('Ocurrio un error inesperado');
+            }
+        } catch (err) {
+            console.error('Error al cargar los tipos de plantas:', err);
+            
+        } finally {
+            setLoading(false);
+        }
+
+        fetchTipoPlantas();
+    };
+
+    useEffect(() => {
+        fetchTipoPlantas();
+    }, []);
+
 
     const manejarCambio = (event) => {
         const idPlanta = event.target.value;
@@ -65,28 +104,35 @@ const AgregarPlantaAdmin = () => {
 
     const manejarEnvio = async (event) => {
         event.preventDefault();
-
-        const plantaData = mostrarFormularioManual ? plantaManual : {
+    
+        const plantaData = mostrarFormularioManual ? 
+        {
+            ...plantaManual,
+            id_Tipo: selectedTipo  // Incluye el id_Tipo seleccionado
+        } : {
             nombre_comun: plantaInfo.common_name,
             nombre_cientifico: plantaInfo.scientific_name,
             descripcion: plantaInfo.description,
             frecuencia_riego: plantaInfo.frecuencia_riego,
-            frecuencia_fertilizacion: plantaInfo.frecuencia_fertilizacion
+            frecuencia_fertilizacion: plantaInfo.frecuencia_fertilizacion,
+            id_Tipo: selectedTipo  // Incluye el id_Tipo seleccionado
         };
-
-        if (!plantaData.nombre_comun || !plantaData.nombre_cientifico || isSubmitting) return;
-
+    
+        // Verifica que los campos necesarios están llenos y no se está enviando doble
+        if (!plantaData.nombre_comun || !plantaData.nombre_cientifico || !selectedTipo || isSubmitting) return;
+    
         setIsSubmitting(true);
-
+    
         try {
             await axios.post('http://localhost/API/agregarPlantaAdmin.php', plantaData, { withCredentials: true });
             alert('Planta agregada correctamente');
-            //setShowModal(true);
+            
             setPlantaSeleccionada('');
             setPlantaInfo(null);
             setMostrarFormularioManual(false);
             setPlantaManual({ nombre_comun: '', nombre_cientifico: '', descripcion: '', frecuencia_riego: '', frecuencia_fertilizacion: '' });
-
+            setSelectedTipo('');  // Restablece el valor del select de tipo de planta
+    
             navigate('/modificarAdmin');
             
         } catch (error) {
@@ -96,15 +142,19 @@ const AgregarPlantaAdmin = () => {
             setIsSubmitting(false);
         }
     };
+    
 
     const manejarCambioFormularioManual = (event) => {
         const { name, value } = event.target;
         setPlantaManual({ ...plantaManual, [name]: value });
     };
 
+    if(noAdmin) return <h1>No tienes permisos para ver este panel</h1>
+
     if (isLoading) return <p style={styles.loadingText}>Cargando plantas...</p>;
     if (error) return <p style={styles.errorText}>Error al buscar las plantas: {error.message}</p>;
 
+    
     return (
         <div style={styles.container}>
             <div style={styles.imageContainer}>
@@ -131,6 +181,10 @@ const AgregarPlantaAdmin = () => {
                                     required
                                 />
                             </div>
+
+
+
+
                             <div style={styles.inputContainer}>
                                 <label style={styles.label}>Nombre Científico:</label>
                                 <input
@@ -145,6 +199,24 @@ const AgregarPlantaAdmin = () => {
                         </div>
 
                         <div style={styles.manualContainer}>
+
+                        <div style={styles.inputContainer}>
+                                <label style={styles.label}>Tipo de planta (días)</label>
+                                <select 
+                                    style={styles.input} 
+                                    value={selectedTipo} 
+                                    onChange={(e) => setSelectedTipo(e.target.value)}
+                                    required  // Asegura que el usuario debe seleccionar un tipo
+                                > 
+                                    <option value="">Seleccione un tipo de planta</option> 
+                                    {tipoPlantas.map(tipo => ( 
+                                        <option key={tipo.id_Tipo} value={tipo.id_Tipo}> 
+                                            {tipo.Nombre} 
+                                        </option> 
+                                    ))} 
+                                </select>
+                            </div>
+
                             <div style={styles.inputContainer}>
                                 <label style={styles.label}>Frecuencia de riego (días)</label>
                                 <select

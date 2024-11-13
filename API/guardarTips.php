@@ -3,10 +3,10 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: Content-Type");
 
-$servername = "databaseis.c3g4iieacsm1.us-west-1.rds.amazonaws.com";
+$servername = "dbis.cpmigq8o8do7.us-east-2.rds.amazonaws.com";
 $username = "admin";
-$password = "rootaws123.";
-$dbname = "databaseis";
+$password = "root_0010";
+$dbname = "dbis";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -20,7 +20,7 @@ $plant_id = $data['plant_id'];
 $tip = $data['tip'];
 
 // Verificar si el plant_id existe en la tabla plantas
-$checkPlantIdQuery = "SELECT id FROM plantas WHERE id = ?";
+$checkPlantIdQuery = "SELECT id FROM libraryPlants WHERE id = ?";
 $checkStmt = $conn->prepare($checkPlantIdQuery);
 $checkStmt->bind_param("i", $plant_id);
 $checkStmt->execute();
