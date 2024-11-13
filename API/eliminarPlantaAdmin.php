@@ -32,7 +32,7 @@ if ($id > 0) {
     
     if ($stmtTareas->execute()) {
         // Después de eliminar las tareas, eliminar la planta
-        $sqlDeletePlanta = "DELETE FROM plantas WHERE id = ?";
+        $sqlDeletePlanta = "DELETE FROM libraryPlants WHERE id = ?";
         $stmtPlanta = $conn->prepare($sqlDeletePlanta);
         $stmtPlanta->bind_param("i", $id);
 

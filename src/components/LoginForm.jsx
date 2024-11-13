@@ -18,8 +18,13 @@ const LoginForm = () => {
                 localStorage.setItem('userID', response.data.user_id);
                 localStorage.setItem('email', response.data.session.email);
                 localStorage.setItem('username', response.data.session.username);
+                localStorage.setItem('rol', response.data.session.rol);
                 console.log(response.data);
-                navigate('/Dashboard');
+                if (response.data.session.rol === 'administrador') {
+                    navigate('/administracion')
+                } else if (response.data.session.rol === 'usuario') {
+                    navigate('/Dashboard');
+                }
             } else {
                 alert("Credenciales incorrectas");
             }

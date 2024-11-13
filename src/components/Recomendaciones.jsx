@@ -31,52 +31,52 @@ const Recomendaciones = () => {
     useEffect(() => {
         if (!isMounted.current) { 
             axios.get("http://localhost/API/getPlantNames.php")
-                .then(response => setPlantNames(response.data))
-                .catch(error => console.error("Error al obtener nombres de plantas:", error));
+            .then(response => setPlantNames(response.data))
+            .catch(error => console.error("Error al obtener nombres de plantas:", error));
             isMounted.current = true;
         }
     }, []);
 
     const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-    const fetchRecommendations = useCallback(async () => {
-        const newRecommendations = {};
-        const batchSize = 5;
+    // const fetchRecommendations = useCallback(async () => {
+    //     const newRecommendations = {};
+    //     const batchSize = 5;
 
-        for (let i = 0; i < plantNames.length; i += batchSize) {
-            const batch = plantNames.slice(i, i + batchSize);
-            const requests = batch.map(name =>
-                axios.post("https://api.openai.com/v1/chat/completions", {
-                    model: "gpt-3.5-turbo",
-                    messages: [
-                        { role: "system", content: "Eres un experto en cuidado de plantas." },
-                        { role: "user", content: `Dame recomendaciones sobre la planta llamada: ${name}. Si consideras que no es una planta o flor indicalo. Por favor, limita tu respuesta a 200 tokens y asegúrate de que la información sea coherente.` }
-                    ],
-                    max_tokens: 200
-                }, {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": "Bearer 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" // Asegúrate de reemplazar con tu clave API
-                    }
-                }).then(response => {
-                    newRecommendations[name] = response.data.choices[0].message.content;
-                }).catch(error => {
-                    console.error(`Error al obtener recomendación para ${name}:`, error);
-                    newRecommendations[name] = "No se pudo obtener la recomendación.";
-                })
-            );
-            await Promise.all(requests);
-            await sleep(2000);
-        }
+    //     for (let i = 0; i < plantNames.length; i += batchSize) {
+    //         const batch = plantNames.slice(i, i + batchSize);
+    //         const requests = batch.map(name =>
+    //             axios.post("https://api.openai.com/v1/chat/completions", {
+    //                 model: "gpt-3.5-turbo",
+    //                 messages: [
+    //                     { role: "system", content: "Eres un experto en cuidado de plantas." },
+    //                     { role: "user", content: `Dame recomendaciones sobre la planta llamada: ${name}. Si consideras que no es una planta o flor indicalo. Por favor, limita tu respuesta a 200 tokens y asegúrate de que la información sea coherente.` }
+    //                 ],
+    //                 max_tokens: 200
+    //             }, {
+    //                 headers: {
+    //                     "Content-Type": "application/json",
+    //                     "Authorization": "Bearer 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" // Asegúrate de reemplazar con tu clave API
+    //                 }
+    //             }).then(response => {
+    //                 newRecommendations[name] = response.data.choices[0].message.content;
+    //             }).catch(error => {
+    //                 console.error(`Error al obtener recomendación para ${name}:`, error);
+    //                 newRecommendations[name] = "No se pudo obtener la recomendación.";
+    //             })
+    //         );
+    //         await Promise.all(requests);
+    //         await sleep(2000);
+    //     }
 
-        setRecommendations(newRecommendations);
-    }, [plantNames]);
+    //     setRecommendations(newRecommendations);
+    // }, [plantNames]);
 
-    useEffect(() => {
-        if (plantNames.length > 0) {
-            fetchRecommendations();
-        }
-    }, [plantNames, fetchRecommendations]);
+    // useEffect(() => {
+    //     if (plantNames.length > 0) {
+    //         fetchRecommendations();
+    //     }
+    // }, [plantNames, fetchRecommendations]);
 
     return (
         <div style={styles.container}>

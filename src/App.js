@@ -17,7 +17,9 @@ import DeleteProfile from './components/DeleteProfile';
 import Notificaciones from './components/Notificaciones';
 import ImageAnalyzer from './components/ImageAnalyzer';
 import Footer from './components/Footer';
-
+import Administracion from './components/Administracion';
+import AgregarPlantaAdmin from './components/AgregarPlantaAdmin';
+import TablaPlantasAdmin from './components/TablaPlantasAdmin';
 
 const queryClient = new QueryClient();
 
@@ -39,7 +41,9 @@ const App = () => {
                               <div className='myContent'>
                                 <Routes>
                                     <Route path="dashboard" element={<Dashboard />} />
+                                    <Route path="administracion" element={<Administracion />} />
                                     <Route path="agregar" element={<AgregarPlanta />} />
+                                    <Route path="agregarAdmin" element={<AgregarPlantaAdmin />} />
                                     <Route path="enciclopedia" element={<Enciclopedia />} />
                                     <Route path="mis-tareas" element ={<Tareas />} />
                                     <Route path="perfil" element ={<MiPerfil />} />
@@ -49,6 +53,7 @@ const App = () => {
                                     <Route path="recomendaciones" element={<Recomendaciones />} />
                                     <Route path="mis-notificaciones" element={<Notificaciones />} />
                                     <Route path="detectar-planta" element={<ImageAnalyzer />} />
+                                    <Route path="modificarAdmin" element={<TablaPlantasAdmin />} />
                                 </Routes>
                                
                               </div>

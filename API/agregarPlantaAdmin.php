@@ -32,7 +32,7 @@ $usuario_id = $_SESSION['user_id']; // Debe coincidir con el nombre de la variab
 
 
 
-$sql = "INSERT INTO plantas (nombre_comun, nombre_cientifico, descripcion, estado,  fecha_creacion, frecuencia_riego, frecuencia_fertilizacion, usuario_id)
+$sql = "INSERT INTO libraryPlants (nombre_comun, nombre_cientifico, descripcion, estado,  fecha_creacion, frecuencia_riego, frecuencia_fertilizacion, usuario_id)
         VALUES (?, ?, ?, ?, CURDATE(), ?, ?, ?)";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("ssssiii", $nombre_comun, $nombre_cientifico, $descripcion, $estado, $frecuencia_riego, $frecuencia_fertilizacion, $usuario_id);

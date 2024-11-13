@@ -18,24 +18,16 @@ if ($conn->connect_error) {
 }
 
 // Consultar los nombres de las plantas
-$sql = "SELECT p.nombre_comun, t.consejo
-FROM tips t
-JOIN plantas p ON t.planta_id = p.id AND
-JOIN Usuarios u ON u.id = p.usuario_id
-;
-";
+$sql = "SELECT id, nombre_comun FROM libraryPlants";
 $result = $conn->query($sql);
 
-$plantasConConsejos = array();
+$plantas = array();
 if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $plantasConConsejos[] = $row; // Almacena los resultados
+    while($row = $result->fetch_assoc()) {
+        $plantas[] = $row['nombre_comun'];
     }
-} else {
-    echo "No se encontraron consejos.";
 }
-
-echo json_encode($plantasConConsejos); // Devuelve el resultado en formato JSON
+echo json_encode($plantas);
 
 $conn->close();
 ?>

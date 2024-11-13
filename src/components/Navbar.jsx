@@ -44,9 +44,17 @@ const Navbar = () => {
     };
 
 
-    const handleHomeClick = () => navigate('/Dashboard');
+    const handleHomeClick = () => { if (localStorage.getItem('rol') === 'administrador') {
+        navigate('/administracion')
+    } else {
+        navigate('/Dashboard');  
+    }}
     const goToTasks = () => navigate('/mis-tareas');
-    const goToModifyGarden = () => navigate('/modificar');
+    const goToModifyGarden = () => { if (localStorage.getItem('rol') === 'administrador') {
+        navigate('/modificarAdmin')
+    } else {
+        navigate('/modificar');  
+    }}
 
     const styles = {
         navbar: {

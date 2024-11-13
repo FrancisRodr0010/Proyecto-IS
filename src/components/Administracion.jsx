@@ -4,9 +4,8 @@ import axios from 'axios';
 import { format } from 'date-fns'; 
 import { es } from 'date-fns/locale';
 import './Dashboard.css';
-import Administracion from './Administracion';
 
-const Dashboard = () => {
+const Administracion = () => {
   const navigate = useNavigate();
   const [weather, setWeather] = useState(null);
   const [currentDateTime, setCurrentDateTime] = useState('');
@@ -167,16 +166,14 @@ const Dashboard = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-  const goToNewPlant = () => navigate('/agregar');
+  const goToNewPlant = () => navigate('/agregarAdmin');
   const goToTasks = () => navigate('/mis-tareas');
-  const goToModifyGarden = () => navigate('/modificar');
+  const goToModifyGarden = () => navigate('/modificarAdmin');
   const goToEncyclopedia = () => navigate('/enciclopedia');
   const goToEditProfile = () => navigate('/perfil');
   const goToRecommendations = () => navigate('/recomendaciones');
   const goToDetect = () => navigate('/detectar-planta');
   const goToNotifications = () => navigate('/mis-notificaciones')
-
-  // if (rolUsuario == 'administrador') return <Administracion />
 
   return (
     <div className="dashboard-container">
@@ -297,4 +294,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Administracion;
