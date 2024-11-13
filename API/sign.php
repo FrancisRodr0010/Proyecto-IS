@@ -39,7 +39,7 @@ if (isset($data->username) && isset($data->password) && isset($data->email)) {
     } else {
         // Encriptar la contraseña y crear el nuevo usuario
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $insertSql = "INSERT INTO Usuarios (email, username, password) VALUES (?, ?, ?)";
+        $insertSql = "INSERT INTO Usuarios (email, username, password, rol) VALUES (?, ?, ?, 'usuario')";
         $insertStmt = $conn->prepare($insertSql);
         $insertStmt->bind_param("sss", $email, $username, $hashedPassword);
 
