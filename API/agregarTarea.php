@@ -11,10 +11,10 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-$servername = "dbis.cpmigq8o8do7.us-east-2.rds.amazonaws.com";
-$username = "admin";
-$password = "root_0010";
-$dbname = "dbis";
+$servername = "databaseis.c3g4iieacsm1.us-west-1.rds.amazonaws.com"; // Cambia esto por el endpoint de tu base de datos RDS
+$username = "admin"; // Cambia esto por tu usuario de RDS
+$password = "rootaws123."; // Cambia esto por tu contraseña de RDS
+$dbname = "databaseis"; // Cambia esto por el nombre de tu base de datos en RDS
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -35,6 +35,17 @@ if($tarea == 'Riego'){
     $stmt->fetch();
     $stmt->close();
 
+    $estado = 'Estable';
+        $updatePlantSql = "UPDATE plantas SET estado = ? WHERE id = ?";
+        $stmtUpdate = $conn->prepare($updatePlantSql);
+        $stmtUpdate->bind_param("si", $estado, $planta_id);
+
+        if ($stmtUpdate->execute()) {
+            echo json_encode(['success' => true, 'message' => 'Estado de la planta actualizado exitosamente']);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Error al actualizar el estado de la planta']);
+        }
+        $stmtUpdate->close();
 
     if ($frecuencia_riego) {
         $fechaRegistro = new DateTime(); // Fecha actual

@@ -76,13 +76,20 @@ const TablaPlantas = () => {
 
 
     const agregarRiego = async(id) => {
+        const message = 'Tus plantas han sido regadas, no olvides fertilizarlas';
+        const topicArn = 'arn:aws:sns:us-west-1:302263067478:NotiPlanta';
         const riegoData = {
             id_planta: id,
             tarea: 'Riego'
         };
     
         try {
+            const response = await axios.post('http://localhost:5000/send-notification', {
+                message,
+                topicArn,
+            });
             console.log(riegoData);
+            console.log('Respuesta del servidor:', response.data);
             await axios.post('http://localhost/API/agregarTarea.php', riegoData, { withCredentials: true });
             alert('Se hizo un registro de Riego sobre la planta');
             // Descomenta si deseas restablecer el estado después de agregar la tarea
@@ -92,9 +99,10 @@ const TablaPlantas = () => {
             setPlantaManual({ nombre_comun: '', nombre_cientifico: '', descripcion: '', frecuencia_riego: '', frecuencia_fertilizacion: '' });*/
             fetchPlantas();
         } catch (error) {
+            console.error('Error enviando la notificación:', error);
             console.error('Error al registrar la tarea de riego:', error);
             alert('Error al registrar la tarea de riego');
-        } 
+        }
     };
 
 
@@ -162,7 +170,7 @@ const TablaPlantas = () => {
     );
 
     const getColorForStatus = (estado) => {
-        if(estado === "Se requiere atención"){
+        if(estado === "Pendiente de riego"){
             return <h5 className = "card-text" style={{color: 'red'}}>Estado: {estado}</h5>
         } else if(estado === "Estable"){
             return <h5 className = "card-text" style={{color: '#5bd842'}}>Estado: {estado}</h5>
@@ -172,7 +180,7 @@ const TablaPlantas = () => {
     };
 
     const getImageForStatus = (estado) => {
-        if(estado === "Se requiere atención"){
+        if(estado === "Pendiente de riego"){
             return <img src = "warning.gif" alt="plantwarn" style={{width: '9vh', height: '9vh',}}></img>
         } else if(estado === "Estable"){
             return <img src = "checkPlant.gif" alt="plantcheck" style={{width: '9vh', height: '9vh',}}></img>
@@ -182,7 +190,7 @@ const TablaPlantas = () => {
     };
 
     const getCardColorForStatus = (estado) => {
-        if(estado === "Se requiere atención"){
+        if(estado === "Pendiente de riego"){
             return '#feebe3';
         } else {
             return '#f8fee5';

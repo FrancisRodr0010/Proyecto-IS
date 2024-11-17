@@ -11,10 +11,10 @@ if (!isset($_SESSION['user_id'])) { // Asegúrate de que este sea el nombre corr
     exit;
 }
 
-$servername = "dbis.cpmigq8o8do7.us-east-2.rds.amazonaws.com"; // Cambia esto por el endpoint de tu base de datos RDS
+$servername = "databaseis.c3g4iieacsm1.us-west-1.rds.amazonaws.com"; // Cambia esto por el endpoint de tu base de datos RDS
 $username = "admin"; // Cambia esto por tu usuario de RDS
-$password = "root_0010"; // Cambia esto por tu contraseña de RDS
-$dbname = "dbis"; // Cambia esto por el nombre de tu base de datos en RDS
+$password = "rootaws123."; // Cambia esto por tu contraseña de RDS
+$dbname = "databaseis"; // Cambia esto por el nombre de tu base de datos en RDS
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -33,7 +33,7 @@ $usuario_id = $_SESSION['user_id']; // Debe coincidir con el nombre de la variab
 
 
 $sql = "INSERT INTO plantas (nombre_comun, nombre_cientifico, descripcion, estado,  fecha_creacion, frecuencia_riego, frecuencia_fertilizacion, usuario_id)
-        VALUES (?, ?, ?, ?, CURDATE(), ?, ?, ?)";
+        VALUES (?, ?, ?, ?, NOW(), ?, ?, ?)";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("ssssiii", $nombre_comun, $nombre_cientifico, $descripcion, $estado, $frecuencia_riego, $frecuencia_fertilizacion, $usuario_id);
 
