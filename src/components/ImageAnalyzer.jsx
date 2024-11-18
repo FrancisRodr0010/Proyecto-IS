@@ -24,7 +24,7 @@ const ImageAnalyzer = () => {
 
         setIsLoading(true);
         try {
-            const response = await axios.post('http://localhost:5000/analyze-image', formData, {
+            const response = await axios.post('http://13.57.192.47:5000/analyze-image', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             setLabels(response.data);

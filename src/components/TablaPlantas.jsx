@@ -20,7 +20,7 @@ const TablaPlantas = () => {
         window.scrollTo(0, 0);
         const verificarSesion = async () => {
           try {
-            const response = await axios.get('http://localhost/API/verificar_sesion.php', { withCredentials: true });
+            const response = await axios.get('http://13.57.192.47/API/verificar_sesion.php', { withCredentials: true });
             console.log(response.data)
             console.log(response.data.sesion_activa)
             if (!response.data.sesion_activa) {
@@ -42,7 +42,7 @@ const TablaPlantas = () => {
 
     const fetchPlantas = async () => {
         try {
-            const response = await axios.get('http://localhost/API/obtenerPlantas.php', { withCredentials: true });
+            const response = await axios.get('http://13.57.192.47/API/obtenerPlantas.php', { withCredentials: true });
             if (response.data && response.data.data) {
                 console.log(response.data.data)
                 setPlantas(response.data.data);
@@ -60,7 +60,7 @@ const TablaPlantas = () => {
     const handleEliminar = async (id) => {
         if (window.confirm('¿Estás seguro de que deseas eliminar esta planta? Se eliminaran tambien las tareas asociadas')) {
             try {
-                const response = await axios.delete(`http://localhost/API/eliminarPlanta.php?id=${id}`, { withCredentials: true });
+                const response = await axios.delete(`http://13.57.192.47/API/eliminarPlanta.php?id=${id}`, { withCredentials: true });
                 if (response.data.success) {
                     alert('Planta eliminada con éxito');
                     fetchPlantas(); // Recarga las plantas
@@ -84,13 +84,13 @@ const TablaPlantas = () => {
         };
     
         try {
-            const response = await axios.post('http://localhost:5000/send-notification', {
+            const response = await axios.post('http://13.57.192.47:5000/send-notification', {
                 message,
                 topicArn,
             });
             console.log(riegoData);
             console.log('Respuesta del servidor:', response.data);
-            await axios.post('http://localhost/API/agregarTarea.php', riegoData, { withCredentials: true });
+            await axios.post('http://13.57.192.47/API/agregarTarea.php', riegoData, { withCredentials: true });
             alert('Se hizo un registro de Riego sobre la planta');
             // Descomenta si deseas restablecer el estado después de agregar la tarea
             /*setPlantaSeleccionada('');
@@ -114,7 +114,7 @@ const TablaPlantas = () => {
     
         try {
             console.log(fertilizacionData);
-            await axios.post('http://localhost/API/agregarTarea.php', fertilizacionData, { withCredentials: true });
+            await axios.post('http://13.57.192.47/API/agregarTarea.php', fertilizacionData, { withCredentials: true });
             alert('Se hizo un registro de fertilizacion');
             // Descomenta si deseas restablecer el estado después de agregar la tarea
             /*setPlantaSeleccionada('');
@@ -140,7 +140,7 @@ const TablaPlantas = () => {
         try {
             console.log(updatedPlanta);
             const response = await axios.put(
-                'http://localhost/API/modificarPlanta.php',
+                'http://13.57.192.47/API/modificarPlanta.php',
                 updatedPlanta, { withCredentials: true }, // Cuerpo de la solicitud
                 { headers: { 'Content-Type': 'application/json' } }
             );

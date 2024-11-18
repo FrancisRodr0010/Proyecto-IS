@@ -10,7 +10,7 @@ const LoginForm = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost/API/login.php", {
+            const response = await axios.post("http://13.57.192.47/API/login.php", {
                 email,
                 password,
             }, { withCredentials: true });
