@@ -4,7 +4,7 @@
 header('Content-Type: application/json');
 
 // Simulación de conexión a la base de datos (asegúrate de usar tu propia lógica de conexión)
-$mysqli = new mysqli("localhost", "usuario", "contraseña", "nombre_base_datos");
+$mysqli = new mysqli("13.57.192.47", "usuario", "contraseña", "nombre_base_datos");
 
 if ($mysqli->connect_error) {
     die("Error de conexión a la base de datos: " . $mysqli->connect_error);

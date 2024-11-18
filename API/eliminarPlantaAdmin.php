@@ -1,5 +1,5 @@
 <?php
-header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Origin: *"); // Permitir cualquier origen
 header("Access-Control-Allow-Methods: DELETE"); // Métodos permitidos
 header("Access-Control-Allow-Headers: Content-Type");
 header("Access-Control-Allow-Credentials: true");
@@ -32,7 +32,7 @@ if ($id > 0) {
     
     if ($stmtTareas->execute()) {
         // Después de eliminar las tareas, eliminar la planta
-        $sqlDeletePlanta = "DELETE FROM plantas WHERE id = ?";
+        $sqlDeletePlanta = "DELETE FROM libraryPlants WHERE id = ?";
         $stmtPlanta = $conn->prepare($sqlDeletePlanta);
         $stmtPlanta->bind_param("i", $id);
 

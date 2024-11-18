@@ -18,7 +18,7 @@ if ($conn->connect_error) {
 }
 
 // Consultar los nombres de las plantas
-$sql = "SELECT nombre_comun FROM plantas";
+$sql = "SELECT id, nombre_comun FROM libraryPlants";
 $result = $conn->query($sql);
 
 $plantas = array();
