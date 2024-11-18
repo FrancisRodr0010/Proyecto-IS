@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-header("Access-Control-Allow-Origin: http://localhost:3000"); // Permitir cualquier origen
+header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: DELETE"); // Métodos permitidos
 header("Access-Control-Allow-Headers: Content-Type");
 header("Access-Control-Allow-Credentials: true");
