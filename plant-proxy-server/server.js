@@ -19,7 +19,10 @@ AWS.config.update({
 
 const sns = new AWS.SNS();
 
-app.use(cors()); // Habilitar CORS para todas las rutas
+app.use(cors({
+    origin: '*', // Allow only this origin
+    credentials: true // Allow credentials
+}));
 app.use(bodyParser.json()); // Para analizar el cuerpo de las solicitudes JSON
 
 const rekognition = new AWS.Rekognition({
@@ -97,5 +100,5 @@ app.post('/api/guardar-planta', async (req, res) => {
 
 // Iniciar el servidor
 app.listen(PORT, () => {
-    console.log(`Servidor escuchando en http://localhost:${PORT}`);
+    console.log(`Servidor escuchando en http://13.57.192.47:${PORT}`);
 });
